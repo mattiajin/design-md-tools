@@ -21,16 +21,15 @@
   const copyPromptBtn = document.getElementById("copy-prompt");
 
   const PREVIEW_MODE_KEY = "design-md-preview-mode";
-  const TOOL_COLORS = [
-    "#0071e3",
-    "#bf4800",
-    "#248a3d",
-    "#8944ab",
-    "#d70015",
-  ];
+  const TOOL_COLOR_MAP = {
+    "design-md-chrome": "#0071e3",
+    Cursor: "#bf4800",
+    designmaxxing: "#248a3d",
+    "awesome-design-md": "#8944ab",
+    skillui: "#d70015",
+  };
 
   let currentId = null;
-  let toolIndexMap = null;
   let allSameRef = false;
   let hasRefPreview = false;
   let currentRefLabel = "";
@@ -165,19 +164,7 @@
   }
 
   function getToolColor(toolName) {
-    const idx = toolIndexMap.get(toolName);
-    return TOOL_COLORS[(idx !== undefined ? idx : 0) % TOOL_COLORS.length];
-  }
-
-  function buildToolIndexMap() {
-    const tools = [];
-    VERSIONS.forEach((v) => {
-      const name = getToolName(v);
-      if (!tools.includes(name)) tools.push(name);
-    });
-    const map = new Map();
-    tools.forEach((t, i) => map.set(t, i));
-    return map;
+    return TOOL_COLOR_MAP[toolName] || "#0071e3";
   }
 
   function isRuntimeTool(toolItem, primaryTool) {
@@ -335,8 +322,6 @@
       '<p class="archive-empty">暂无对比版本。在 <code>versions/</code> 下放入生成网页，并在 <code>js/versions.js</code> 中记录工具与参考页面。</p>';
     return;
   }
-
-  toolIndexMap = buildToolIndexMap();
 
   const firstRef = getReferencePage(VERSIONS[0]);
   allSameRef = VERSIONS.every((v) => getReferencePage(v).url === firstRef.url);

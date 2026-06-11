@@ -22,27 +22,6 @@ const VERSIONS = [
     id: "v1",
     date: "2026-06-11",
     status: "exploration",
-    tool: "Cursor",
-    note: "无规范 · 只给链接",
-    toolDetail: "无粘贴设计规范，直接让 Agent 根据参考链接生成",
-    referencePage: { ...IBM_DOCS_REFERENCE },
-    summary:
-      "Carbon tokens + IBM Plex，文档式搜索与 topic tiles，深色顶栏 + 浅色内容区，英文界面。",
-    description:
-      "IBM Documentation 首页结构：logo、全局搜索、topic tiles、精选资源卡与文档索引列表。375×812 固定画布，含完整 hover / active / focus-visible 状态。",
-    prompt:
-      "https://www.ibm.com/docs/en 参考IBM风格设计一个设计师作品集移动端app主页（宽高写死，宽375高812），输出为html",
-    tools: ["Cursor", "HTML / CSS"],
-    references: [
-      { label: "IBM Documentation", url: "https://www.ibm.com/docs/en" },
-      { label: "Carbon Design System", url: "https://carbondesignsystem.com/" },
-    ],
-    preview: "versions/v1/index.html",
-  },
-  {
-    id: "v2",
-    date: "2026-06-11",
-    status: "exploration",
     tool: "design-md-chrome",
     note: "规范全文 · 手动粘贴",
     toolDetail: "Chrome 扩展提取设计规范 → Cursor Skill 驱动生成",
@@ -116,6 +95,27 @@ Concise, confident, implementation-focused.
     tools: ["Cursor", "HTML / CSS"],
     references: [
       { label: "IBM Documentation", url: "https://www.ibm.com/docs/en" },
+    ],
+    preview: "versions/v1/index.html",
+  },
+  {
+    id: "v2",
+    date: "2026-06-11",
+    status: "exploration",
+    tool: "Cursor",
+    note: "无规范 · 只给链接",
+    toolDetail: "无粘贴设计规范，直接让 Agent 根据参考链接生成",
+    referencePage: { ...IBM_DOCS_REFERENCE },
+    summary:
+      "Carbon tokens + IBM Plex，文档式搜索与 topic tiles，深色顶栏 + 浅色内容区，英文界面。",
+    description:
+      "IBM Documentation 首页结构：logo、全局搜索、topic tiles、精选资源卡与文档索引列表。375×812 固定画布，含完整 hover / active / focus-visible 状态。",
+    prompt:
+      "https://www.ibm.com/docs/en 参考IBM风格设计一个设计师作品集移动端app主页（宽高写死，宽375高812），输出为html",
+    tools: ["Cursor", "HTML / CSS"],
+    references: [
+      { label: "IBM Documentation", url: "https://www.ibm.com/docs/en" },
+      { label: "Carbon Design System", url: "https://carbondesignsystem.com/" },
     ],
     preview: "versions/v2/index.html",
   },
