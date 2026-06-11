@@ -3,66 +3,57 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=375, initial-scale=1.0" />
-    <title>V2 — IBM Style Designer Portfolio</title>
+    <title>V2 — IBM Documentation Style Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <style>
+      /* ── Design tokens ── */
       :root {
-        --font-sans: "IBM Plex Sans", system-ui, sans-serif;
-        --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+        --font-family-primary: "IBM Plex Sans", system-ui, -apple-system, system-ui,
+          ".SFNSText-Regular", sans-serif;
+        --font-size-xs: 12px;
+        --font-size-sm: 13.33px;
+        --font-size-md: 13.71px;
+        --font-size-lg: 14px;
+        --font-size-xl: 16px;
+        --font-size-2xl: 20px;
+        --font-size-3xl: 28px;
+        --font-size-4xl: 32px;
+        --font-weight-base: 400;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --line-height-base: 18.0001px;
+        --line-height-relaxed: 1.5;
 
-        --blue-60: #0f62fe;
-        --blue-70: #0353e9;
-        --blue-80: #002d9c;
-        --gray-100: #161616;
-        --gray-90: #262626;
-        --gray-80: #393939;
-        --gray-70: #525252;
-        --gray-60: #6f6f6f;
-        --gray-50: #8d8d8d;
-        --gray-40: #a8a8a8;
-        --gray-30: #c6c6c6;
-        --gray-20: #e0e0e0;
-        --gray-10: #f4f4f4;
-        --white: #ffffff;
+        --color-text-primary: #161616;
+        --color-text-secondary: #525252;
+        --color-text-tertiary: #ffffff;
+        --color-text-inverse: #0f62fe;
+        --color-surface-base: #000000;
+        --color-surface-muted: #f4f4f4;
+        --color-surface-strong: #393939;
+        --color-border-subtle: #e0e0e0;
+        --color-focus: #0f62fe;
 
-        --text-primary: var(--gray-100);
-        --text-secondary: var(--gray-70);
-        --text-helper: var(--gray-60);
-        --text-on-color: var(--white);
-        --text-link: var(--blue-60);
-        --surface-default: var(--white);
-        --surface-subtle: var(--gray-10);
-        --surface-inverse: var(--gray-100);
-        --border-subtle: var(--gray-20);
-        --border-strong: var(--gray-100);
-        --focus: var(--blue-60);
+        --space-1: 0.5px;
+        --space-2: 1px;
+        --space-3: 6px;
+        --space-4: 12px;
+        --space-5: 14px;
+        --space-6: 15px;
+        --space-7: 16px;
+        --space-8: 32px;
 
-        --space-02: 4px;
-        --space-03: 8px;
-        --space-04: 12px;
-        --space-05: 16px;
-        --space-06: 24px;
-        --space-07: 32px;
-        --space-08: 40px;
-
-        --type-caption: 12px;
-        --type-label: 14px;
-        --type-body: 14px;
-        --type-heading-03: 20px;
-        --type-heading-04: 28px;
-        --type-heading-05: 32px;
-
-        --motion-fast: 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        --motion-instant: 70ms;
+        --motion-fast: 110ms;
+        --motion-normal: 150ms;
       }
 
-      *,
-      *::before,
-      *::after {
+      * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -77,176 +68,101 @@
       body {
         width: 375px;
         height: 812px;
-        font-family: var(--font-sans);
-        font-size: var(--type-body);
-        line-height: 1.43;
-        color: var(--text-primary);
-        background: var(--surface-subtle);
+        font-family: var(--font-family-primary);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-base);
+        line-height: var(--line-height-base);
+        color: var(--color-text-primary);
+        background: var(--color-surface-muted);
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
       }
 
+      /* ── Focus-visible (WCAG) ── */
       :focus {
         outline: none;
       }
 
       :focus-visible {
-        outline: 2px solid var(--focus);
+        outline: 2px solid var(--color-focus);
         outline-offset: 2px;
       }
 
+      /* ── App shell ── */
       .app {
         display: flex;
         flex-direction: column;
         height: 100%;
+        overflow: hidden;
       }
 
-      /* ── Header (Carbon UI shell) ── */
-      .header {
-        flex-shrink: 0;
-        background: var(--surface-inverse);
-        color: var(--text-on-color);
-      }
-
-      .header__bar {
+      /* ── Top bar ── */
+      .top-bar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 48px;
-        padding: 0 var(--space-05);
-        border-bottom: 1px solid var(--gray-80);
+        padding: var(--space-7) var(--space-7) var(--space-4);
+        background: var(--color-surface-base);
+        color: var(--color-text-tertiary);
+        flex-shrink: 0;
       }
 
-      .header__brand {
+      .top-bar__brand {
         display: flex;
-        align-items: center;
-        gap: var(--space-04);
-        text-decoration: none;
-        color: inherit;
+        flex-direction: column;
+        gap: var(--space-2);
       }
 
-      .header__logo {
-        display: block;
-        width: 38px;
-        height: 16px;
+      .top-bar__label {
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #a8a8a8;
       }
 
-      .header__title {
-        font-size: var(--type-label);
-        font-weight: 600;
-        letter-spacing: 0.01em;
+      .top-bar__name {
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.25;
       }
 
-      .header__actions {
+      .top-bar__actions {
         display: flex;
-        gap: var(--space-02);
+        gap: var(--space-3);
       }
 
-      .header__btn {
+      .icon-btn {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 40px;
         height: 40px;
         border: none;
+        border-radius: 0;
         background: transparent;
-        color: var(--text-on-color);
+        color: var(--color-text-tertiary);
         cursor: pointer;
-        transition: background var(--motion-fast);
+        transition: background var(--motion-fast) ease;
       }
 
-      .header__btn:hover {
-        background: var(--gray-80);
+      .icon-btn:hover {
+        background: var(--color-surface-strong);
       }
 
-      .header__btn:active {
-        background: var(--gray-70);
+      .icon-btn:active {
+        background: #525252;
       }
 
-      .header__btn svg {
+      .icon-btn svg {
         width: 20px;
         height: 20px;
         fill: currentColor;
       }
 
-      .header__intro {
-        padding: var(--space-06) var(--space-05) var(--space-07);
-      }
-
-      .header__eyebrow {
-        font-size: var(--type-caption);
-        font-weight: 500;
-        color: var(--gray-40);
-        margin-bottom: var(--space-03);
-      }
-
-      .header__headline {
-        font-size: var(--type-heading-04);
-        font-weight: 600;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        margin-bottom: var(--space-04);
-      }
-
-      .header__desc {
-        font-size: var(--type-body);
-        line-height: 1.5;
-        color: var(--gray-40);
-        max-width: 320px;
-      }
-
-      /* ── Search (IBM Docs pattern) ── */
-      .search {
-        flex-shrink: 0;
-        padding: 0 var(--space-05) var(--space-05);
-        background: var(--surface-inverse);
-      }
-
-      .search__field {
-        display: flex;
-        align-items: center;
-        gap: var(--space-03);
-        height: 48px;
-        padding: 0 var(--space-05);
-        background: var(--gray-90);
-        border: 1px solid var(--gray-70);
-        transition:
-          border-color var(--motion-fast),
-          background var(--motion-fast);
-      }
-
-      .search__field:focus-within {
-        border-color: var(--blue-60);
-        background: var(--gray-80);
-      }
-
-      .search__icon {
-        flex-shrink: 0;
-        color: var(--gray-40);
-      }
-
-      .search__icon svg {
-        width: 18px;
-        height: 18px;
-        fill: currentColor;
-        display: block;
-      }
-
-      .search__input {
-        flex: 1;
-        min-width: 0;
-        border: none;
-        background: transparent;
-        font-family: inherit;
-        font-size: var(--type-label);
-        color: var(--text-on-color);
-      }
-
-      .search__input::placeholder {
-        color: var(--gray-50);
-      }
-
-      /* ── Scrollable content ── */
-      .content {
+      /* ── Scrollable main ── */
+      .main {
         flex: 1;
         overflow-y: auto;
         overflow-x: hidden;
@@ -255,37 +171,82 @@
         -ms-overflow-style: none;
       }
 
-      .content::-webkit-scrollbar {
+      .main::-webkit-scrollbar {
         display: none;
       }
 
-      .content__inner {
-        padding-bottom: var(--space-07);
+      /* ── Hero ── */
+      .hero {
+        background: var(--color-surface-base);
+        color: var(--color-text-tertiary);
+        padding: 0 var(--space-7) var(--space-8);
+      }
+
+      .hero__role {
+        font-size: var(--font-size-sm);
+        color: #c6c6c6;
+        margin-bottom: var(--space-4);
+      }
+
+      .hero__headline {
+        font-size: var(--font-size-3xl);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin-bottom: var(--space-5);
+      }
+
+      .hero__desc {
+        font-size: var(--font-size-lg);
+        line-height: var(--line-height-relaxed);
+        color: #a8a8a8;
+        max-width: 320px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-4);
+        margin-top: var(--space-8);
+        padding-top: var(--space-7);
+        border-top: var(--space-2) solid var(--color-surface-strong);
+      }
+
+      .stat__value {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.2;
+      }
+
+      .stat__label {
+        font-size: var(--font-size-xs);
+        color: #a8a8a8;
+        margin-top: var(--space-3);
       }
 
       /* ── Section ── */
       .section {
-        padding: var(--space-06) var(--space-05) 0;
+        padding: var(--space-8) var(--space-7) 0;
       }
 
-      .section__head {
+      .section__header {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
-        margin-bottom: var(--space-05);
+        margin-bottom: var(--space-7);
       }
 
       .section__title {
-        font-size: var(--type-heading-03);
-        font-weight: 600;
-        line-height: 1.25;
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-text-primary);
       }
 
       .section__link {
-        font-size: var(--type-caption);
-        font-weight: 500;
-        color: var(--text-link);
+        font-size: var(--font-size-sm);
+        color: var(--color-text-inverse);
         text-decoration: none;
+        transition: opacity var(--motion-fast) ease;
       }
 
       .section__link:hover {
@@ -293,343 +254,431 @@
       }
 
       .section__link:active {
-        color: var(--blue-70);
+        opacity: 0.8;
       }
 
-      /* ── Topic tiles (Docs product cards) ── */
-      .tile-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-03);
-      }
-
-      .tile {
+      /* ── Filter chips ── */
+      .chip-row {
         display: flex;
-        flex-direction: column;
-        min-height: 108px;
-        padding: var(--space-05);
-        background: var(--surface-default);
-        border: 1px solid var(--border-subtle);
-        text-decoration: none;
-        color: inherit;
+        gap: var(--space-3);
+        overflow-x: auto;
+        padding-bottom: var(--space-4);
+        margin: 0 calc(-1 * var(--space-7));
+        padding-left: var(--space-7);
+        padding-right: var(--space-7);
+        scrollbar-width: none;
+      }
+
+      .chip-row::-webkit-scrollbar {
+        display: none;
+      }
+
+      .chip {
+        flex-shrink: 0;
+        padding: var(--space-3) var(--space-5);
+        font-family: inherit;
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+        line-height: var(--line-height-base);
+        border: var(--space-2) solid var(--color-border-subtle);
+        border-radius: 0;
+        background: #ffffff;
+        color: var(--color-text-primary);
+        cursor: pointer;
         transition:
-          border-color var(--motion-fast),
-          background var(--motion-fast);
-      }
-
-      .tile:hover {
-        border-color: var(--gray-30);
-        background: var(--gray-10);
-      }
-
-      .tile:active {
-        border-color: var(--blue-60);
-      }
-
-      .tile__icon {
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--gray-10);
-        margin-bottom: var(--space-04);
-        color: var(--gray-100);
-      }
-
-      .tile__icon svg {
-        width: 18px;
-        height: 18px;
-        fill: currentColor;
-      }
-
-      .tile__label {
-        font-size: var(--type-label);
-        font-weight: 600;
-        line-height: 1.3;
-        margin-bottom: var(--space-02);
-      }
-
-      .tile__count {
-        font-family: var(--font-mono);
-        font-size: var(--type-caption);
-        color: var(--text-helper);
-      }
-
-      /* ── Featured resource card ── */
-      .resource-card {
-        display: block;
-        background: var(--surface-default);
-        border: 1px solid var(--border-subtle);
-        text-decoration: none;
-        color: inherit;
-        transition: border-color var(--motion-fast);
-      }
-
-      .resource-card:hover {
-        border-color: var(--gray-30);
-      }
-
-      .resource-card:active {
-        border-color: var(--blue-60);
-      }
-
-      .resource-card__media {
-        position: relative;
-        height: 148px;
-        overflow: hidden;
-        background: var(--gray-90);
-      }
-
-      .resource-card__media img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        opacity: 0.88;
-      }
-
-      .resource-card__tag {
-        position: absolute;
-        left: var(--space-05);
-        bottom: var(--space-05);
-        padding: var(--space-02) var(--space-04);
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        background: var(--blue-60);
-        color: var(--text-on-color);
-      }
-
-      .resource-card__body {
-        padding: var(--space-05);
-      }
-
-      .resource-card__meta {
-        font-family: var(--font-mono);
-        font-size: var(--type-caption);
-        color: var(--text-helper);
-        margin-bottom: var(--space-03);
-      }
-
-      .resource-card__title {
-        font-size: var(--type-heading-03);
-        font-weight: 600;
-        line-height: 1.25;
-        margin-bottom: var(--space-03);
-      }
-
-      .resource-card__desc {
-        font-size: var(--type-body);
-        color: var(--text-secondary);
-        line-height: 1.5;
-      }
-
-      /* ── Doc index list ── */
-      .doc-list {
-        list-style: none;
-        background: var(--surface-default);
-        border: 1px solid var(--border-subtle);
-      }
-
-      .doc-list__item + .doc-list__item {
-        border-top: 1px solid var(--border-subtle);
-      }
-
-      .doc-list__link {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        align-items: center;
-        gap: var(--space-04);
-        padding: var(--space-05);
-        text-decoration: none;
-        color: inherit;
-        transition: background var(--motion-fast);
-      }
-
-      .doc-list__link:hover {
-        background: var(--gray-10);
-      }
-
-      .doc-list__link:active {
-        background: var(--gray-20);
-      }
-
-      .doc-list__type {
-        font-family: var(--font-mono);
-        font-size: 11px;
-        font-weight: 500;
-        color: var(--text-helper);
-        writing-mode: vertical-rl;
-        transform: rotate(180deg);
-        letter-spacing: 0.06em;
-      }
-
-      .doc-list__title {
-        font-size: var(--type-label);
-        font-weight: 500;
-        line-height: 1.35;
-      }
-
-      .doc-list__sub {
-        font-size: var(--type-caption);
-        color: var(--text-helper);
-        margin-top: 2px;
-      }
-
-      .doc-list__arrow {
-        color: var(--blue-60);
-      }
-
-      .doc-list__arrow svg {
-        width: 16px;
-        height: 16px;
-        fill: currentColor;
-        display: block;
-      }
-
-      /* ── Status strip ── */
-      .status-strip {
-        display: flex;
-        align-items: center;
-        gap: var(--space-04);
-        margin-top: var(--space-06);
-        padding: var(--space-04) var(--space-05);
-        background: var(--surface-default);
-        border: 1px solid var(--border-subtle);
-      }
-
-      .status-strip__label {
-        font-size: var(--type-caption);
-        font-weight: 600;
-        color: var(--text-primary);
+          background var(--motion-fast) ease,
+          border-color var(--motion-fast) ease,
+          color var(--motion-fast) ease;
         white-space: nowrap;
       }
 
-      .status-strip__track {
-        flex: 1;
-        height: 4px;
-        background: var(--gray-20);
-        overflow: hidden;
+      .chip:hover {
+        background: var(--color-surface-muted);
+        border-color: #c6c6c6;
       }
 
-      .status-strip__fill {
-        height: 100%;
-        width: 72%;
-        background: var(--blue-60);
+      .chip--active {
+        background: var(--color-surface-base);
+        border-color: var(--color-surface-base);
+        color: var(--color-text-tertiary);
       }
 
-      .status-strip__value {
-        font-family: var(--font-mono);
-        font-size: var(--type-caption);
-        color: var(--text-helper);
+      .chip--active:hover {
+        background: var(--color-surface-strong);
+        border-color: var(--color-surface-strong);
       }
 
-      /* ── Contact dock (inverse footer) ── */
-      .contact-dock {
-        flex-shrink: 0;
-        padding: 12px 16px 16px;
-        background: var(--surface-inverse);
-        color: var(--text-on-color);
-        border-top: 1px solid var(--gray-80);
+      .chip:active {
+        transform: scale(0.98);
       }
 
-      .contact-dock__meta {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 12px;
-        font-size: 12px;
-        color: var(--gray-40);
-      }
-
-      .contact-dock__dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: #42be65;
-        flex-shrink: 0;
-      }
-
-      .contact-dock__row {
-        display: flex;
-        gap: 8px;
-        align-items: stretch;
-      }
-
-      .contact-dock__hello {
-        flex: 0 0 auto;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        min-width: 48px;
-        height: 48px;
-        padding: 0 14px;
-        border: 1px solid var(--gray-70);
-        background: transparent;
-        color: var(--text-on-color);
-        font-family: inherit;
-        font-size: 13px;
-        font-weight: 500;
+      /* ── Featured card ── */
+      .featured-card {
+        display: block;
+        background: #ffffff;
+        border: var(--space-2) solid var(--color-border-subtle);
         text-decoration: none;
-        cursor: pointer;
+        color: inherit;
         transition:
-          background var(--motion-fast),
-          border-color var(--motion-fast);
+          border-color var(--motion-normal) ease,
+          box-shadow var(--motion-normal) ease;
       }
 
-      .contact-dock__hello:hover {
-        background: var(--gray-80);
-        border-color: var(--gray-40);
+      .featured-card:hover {
+        border-color: #c6c6c6;
       }
 
-      .contact-dock__hello:active {
-        background: var(--gray-70);
+      .featured-card:active {
+        border-color: var(--color-text-inverse);
       }
 
-      .contact-dock__hello svg {
+      .featured-card__visual {
+        height: 160px;
+        background: linear-gradient(135deg, #393939 0%, #161616 100%);
+        display: flex;
+        align-items: flex-end;
+        padding: var(--space-7);
+      }
+
+      .featured-card__badge {
+        display: inline-block;
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        background: var(--color-text-inverse);
+        color: var(--color-text-tertiary);
+      }
+
+      .featured-card__body {
+        padding: var(--space-7);
+      }
+
+      .featured-card__meta {
+        font-size: var(--font-size-xs);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-3);
+      }
+
+      .featured-card__title {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.25;
+        margin-bottom: var(--space-4);
+      }
+
+      .featured-card__desc {
+        font-size: var(--font-size-md);
+        color: var(--color-text-secondary);
+        line-height: var(--line-height-relaxed);
+      }
+
+      /* ── Project list ── */
+      .project-list {
+        list-style: none;
+        background: #ffffff;
+        border: var(--space-2) solid var(--color-border-subtle);
+      }
+
+      .project-item {
+        border-bottom: var(--space-2) solid var(--color-border-subtle);
+      }
+
+      .project-item:last-child {
+        border-bottom: none;
+      }
+
+      .project-item__link {
+        display: flex;
+        align-items: center;
+        gap: var(--space-7);
+        padding: var(--space-6) var(--space-7);
+        text-decoration: none;
+        color: inherit;
+        transition: background var(--motion-fast) ease;
+      }
+
+      .project-item__link:hover {
+        background: var(--color-surface-muted);
+      }
+
+      .project-item__link:active {
+        background: #e8e8e8;
+      }
+
+      .project-item__index {
+        flex-shrink: 0;
+        width: 28px;
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-secondary);
+        text-align: center;
+      }
+
+      .project-item__content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .project-item__title {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .project-item__meta {
+        font-size: var(--font-size-xs);
+        color: var(--color-text-secondary);
+        margin-top: var(--space-2);
+      }
+
+      .project-item__arrow {
+        flex-shrink: 0;
+        color: var(--color-text-inverse);
+      }
+
+      .project-item__arrow svg {
         width: 16px;
         height: 16px;
         fill: currentColor;
-        flex-shrink: 0;
       }
 
-      .contact-dock__book {
+      /* ── CTA footer ── */
+      .cta-bar {
+        flex-shrink: 0;
+        padding: var(--space-7);
+        background: #ffffff;
+        border-top: var(--space-2) solid var(--color-border-subtle);
+        display: flex;
+        gap: var(--space-4);
+      }
+
+      .btn {
         flex: 1;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        min-height: 48px;
-        padding: 0 16px;
-        border: none;
-        background: var(--blue-60);
-        color: var(--text-on-color);
+        gap: var(--space-3);
+        padding: var(--space-5) var(--space-7);
         font-family: inherit;
-        font-size: 14px;
-        font-weight: 500;
-        text-decoration: none;
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
+        line-height: var(--line-height-base);
+        border: none;
+        border-radius: 0;
         cursor: pointer;
-        transition: background var(--motion-fast);
+        text-decoration: none;
+        transition:
+          background var(--motion-fast) ease,
+          color var(--motion-fast) ease,
+          opacity var(--motion-fast) ease;
       }
 
-      .contact-dock__book:hover {
-        background: var(--blue-70);
+      .btn--primary {
+        background: var(--color-text-inverse);
+        color: var(--color-text-tertiary);
       }
 
-      .contact-dock__book:active {
-        background: var(--blue-80);
+      .btn--primary:hover {
+        background: #0353e9;
       }
 
-      .contact-dock__book svg {
-        width: 16px;
-        height: 16px;
-        fill: currentColor;
-        flex-shrink: 0;
+      .btn--primary:active {
+        background: #002d9c;
       }
 
+      .btn--secondary {
+        background: transparent;
+        color: var(--color-text-primary);
+        border: var(--space-2) solid var(--color-text-primary);
+      }
+
+      .btn--secondary:hover {
+        background: var(--color-surface-muted);
+      }
+
+      .btn--secondary:active {
+        background: #e0e0e0;
+      }
+
+      .btn:disabled,
+      .btn--disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      .main__spacer {
+        height: var(--space-8);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="top-bar">
+        <div class="top-bar__brand">
+          <span class="top-bar__label">Portfolio</span>
+          <span class="top-bar__name">Lin Wei</span>
+        </div>
+        <div class="top-bar__actions">
+          <button class="icon-btn" type="button" aria-label="Search projects">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path
+                d="M29 27.5858L22.4508 21.0366C24.2643 18.9177 25.25 16.1443 25.25 13.125C25.25 6.76587 20.1091 1.625 13.75 1.625C7.39087 1.625 2.25 6.76587 2.25 13.125C2.25 19.4841 7.39087 24.625 13.75 24.625C16.7693 24.625 19.5427 23.6393 21.6616 21.8258L28.2108 28.375L29 27.5858ZM13.75 23.125C8.77944 23.125 4.75 19.0956 4.75 14.125C4.75 9.15444 8.77944 5.125 13.75 5.125C18.7206 5.125 22.75 9.15444 22.75 14.125C22.75 19.0956 18.7206 23.125 13.75 23.125Z"
+              />
+            </svg>
+          </button>
+          <button class="icon-btn" type="button" aria-label="Open menu">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M4 8H28V10H4V8ZM4 15H28V17H4V15ZM4 22H28V24H4V22Z" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="main" id="main-content">
+        <section class="hero" aria-labelledby="hero-heading">
+          <p class="hero__role">Product &amp; Visual Designer</p>
+          <h1 class="hero__headline" id="hero-heading">
+            Building trustworthy<br />experiences at scale
+          </h1>
+          <p class="hero__desc">
+            Focused on design systems, documentation products, and B2B interfaces. Delivering production-ready work with clear information architecture and accessibility standards.
+          </p>
+          <dl class="stats">
+            <div>
+              <dt class="stat__value">12+</dt>
+              <dd class="stat__label">Featured projects</dd>
+            </div>
+            <div>
+              <dt class="stat__value">6 yr</dt>
+              <dd class="stat__label">Experience</dd>
+            </div>
+            <div>
+              <dt class="stat__value">3</dt>
+              <dd class="stat__label">Design systems</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="section" aria-labelledby="filter-heading">
+          <h2 class="visually-hidden" id="filter-heading">Project category filters</h2>
+          <div class="chip-row" role="toolbar" aria-label="Project categories">
+            <button class="chip chip--active" type="button" aria-pressed="true">
+              All
+            </button>
+            <button class="chip" type="button" aria-pressed="false">Product UI</button>
+            <button class="chip" type="button" aria-pressed="false">Design Systems</button>
+            <button class="chip" type="button" aria-pressed="false">Brand Identity</button>
+            <button class="chip" type="button" aria-pressed="false">Documentation UX</button>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="featured-heading">
+          <div class="section__header">
+            <h2 class="section__title" id="featured-heading">Featured work</h2>
+            <a class="section__link" href="#">View all</a>
+          </div>
+          <a class="featured-card" href="#">
+            <div class="featured-card__visual">
+              <span class="featured-card__badge">Featured</span>
+            </div>
+            <div class="featured-card__body">
+              <p class="featured-card__meta">Design System · 2025</p>
+              <h3 class="featured-card__title">Enterprise Docs Design System</h3>
+              <p class="featured-card__desc">
+                Token-driven component library for a technical documentation platform, covering 40+ component states and WCAG 2.2 AA acceptance criteria.
+              </p>
+            </div>
+          </a>
+        </section>
+
+        <section class="section" aria-labelledby="projects-heading">
+          <div class="section__header">
+            <h2 class="section__title" id="projects-heading">Recent projects</h2>
+            <a class="section__link" href="#">Archive</a>
+          </div>
+          <ul class="project-list">
+            <li class="project-item">
+              <a class="project-item__link" href="#">
+                <span class="project-item__index">01</span>
+                <span class="project-item__content">
+                  <span class="project-item__title">Cloud Console Redesign</span>
+                  <span class="project-item__meta">Product UI · 2025</span>
+                </span>
+                <span class="project-item__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">
+                    <path
+                      d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </li>
+            <li class="project-item">
+              <a class="project-item__link" href="#">
+                <span class="project-item__index">02</span>
+                <span class="project-item__content">
+                  <span class="project-item__title">Developer Portal IA</span>
+                  <span class="project-item__meta">Information Architecture · 2024</span>
+                </span>
+                <span class="project-item__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">
+                    <path
+                      d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </li>
+            <li class="project-item">
+              <a class="project-item__link" href="#">
+                <span class="project-item__index">03</span>
+                <span class="project-item__content">
+                  <span class="project-item__title">Fintech Mobile Onboarding</span>
+                  <span class="project-item__meta">Mobile · 2024</span>
+                </span>
+                <span class="project-item__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">
+                    <path
+                      d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </li>
+            <li class="project-item">
+              <a class="project-item__link" href="#">
+                <span class="project-item__index">04</span>
+                <span class="project-item__content">
+                  <span class="project-item__title">Brand Guidelines Toolkit</span>
+                  <span class="project-item__meta">Brand Identity · 2023</span>
+                </span>
+                <span class="project-item__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">
+                    <path
+                      d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <div class="main__spacer" aria-hidden="true"></div>
+      </main>
+
+      <footer class="cta-bar">
+        <a class="btn btn--secondary" href="mailto:hello@linwei.design">Email</a>
+        <a class="btn btn--primary" href="#">Download résumé</a>
+      </footer>
+    </div>
+
+    <style>
       .visually-hidden {
         position: absolute;
         width: 1px;
@@ -641,247 +690,20 @@
         white-space: nowrap;
         border: 0;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          transition-duration: 0.01ms !important;
-        }
-      }
     </style>
-  </head>
-  <body>
-    <div class="app">
-      <header class="header">
-        <div class="header__bar">
-          <a class="header__brand" href="#" aria-label="Back to home">
-            <svg class="header__logo" viewBox="0 0 38 16" aria-hidden="true">
-              <rect x="0" y="0" width="4" height="16" fill="#fff" />
-              <rect x="6" y="0" width="4" height="16" fill="#fff" />
-              <rect x="12" y="0" width="4" height="16" fill="#fff" />
-              <rect x="18" y="0" width="4" height="16" fill="#fff" />
-              <rect x="24" y="0" width="4" height="16" fill="#fff" />
-              <rect x="30" y="0" width="4" height="16" fill="#fff" />
-              <rect x="36" y="0" width="2" height="16" fill="#fff" />
-            </svg>
-            <span class="header__title">Elena Voss · Portfolio</span>
-          </a>
-          <div class="header__actions">
-            <button class="header__btn" type="button" aria-label="Change language">
-              <svg viewBox="0 0 32 32" aria-hidden="true">
-                <path
-                  d="M16 2C8.26801 2 2 8.26801 2 16C2 23.732 8.26801 30 16 30C23.732 30 30 23.732 30 16C30 8.26801 23.732 2 16 2ZM14 4.06934C9.47461 4.51367 5.51367 8.47461 4.06934 13H14V4.06934ZM16 4.06934V13H25.9307C24.4863 8.47461 20.5254 4.51367 16 4.06934ZM4.06934 15C4.51367 19.5254 8.47461 23.4863 13 23.9307V15H4.06934ZM16 23.9307C20.5254 23.4863 24.4863 19.5254 24.9307 15H16V23.9307ZM13 25.9307V28.9307C8.47461 28.4863 4.51367 24.5254 4.06934 20H13V25.9307ZM16 28.9307V25.9307H24.9307C24.4863 28.4863 20.5254 28.4863 16 28.9307Z"
-                />
-              </svg>
-            </button>
-            <button class="header__btn" type="button" aria-label="Open menu">
-              <svg viewBox="0 0 32 32" aria-hidden="true">
-                <path d="M4 8H28V10H4V8ZM4 15H28V17H4V15ZM4 22H28V24H4V22Z" />
-              </svg>
-            </button>
-          </div>
-        </div>
 
-        <div class="header__intro">
-          <p class="header__eyebrow">Interaction · Research · Systems</p>
-          <h1 class="header__headline">Design for teams<br />who ship with specs</h1>
-          <p class="header__desc">
-            Flows, prototypes, and validation for fintech and healthcare. Every handoff includes states, edge cases, and acceptance notes.
-          </p>
-        </div>
-
-        <div class="search">
-          <label class="search__field">
-            <span class="search__icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32">
-                <path
-                  d="M29 27.5858L22.4508 21.0366C24.2643 18.9177 25.25 16.1443 25.25 13.125C25.25 6.76587 20.1091 1.625 13.75 1.625C7.39087 1.625 2.25 6.76587 2.25 13.125C2.25 19.4841 7.39087 24.625 13.75 24.625C16.7693 24.625 19.5427 23.6393 21.6616 21.8258L28.2108 28.375L29 27.5858ZM13.75 23.125C8.77944 23.125 4.75 19.0956 4.75 14.125C4.75 9.15444 8.77944 5.125 13.75 5.125C18.7206 5.125 22.75 9.15444 22.75 14.125C22.75 19.0956 18.7206 23.125 13.75 23.125Z"
-                />
-              </svg>
-            </span>
-            <span class="visually-hidden" id="search-label">Search case studies</span>
-            <input
-              class="search__input"
-              type="search"
-              placeholder="Find a case study or topic..."
-              aria-labelledby="search-label"
-            />
-          </label>
-        </div>
-      </header>
-
-      <main class="content" id="main">
-        <div class="content__inner">
-          <section class="section" aria-labelledby="topics-title">
-            <div class="section__head">
-              <h2 class="section__title" id="topics-title">Explore disciplines</h2>
-              <a class="section__link" href="#">View all</a>
-            </div>
-            <div class="tile-grid">
-              <a class="tile" href="#">
-                <span class="tile__icon" aria-hidden="true">
-                  <svg viewBox="0 0 32 32">
-                    <path
-                      d="M12 2H20V4H26V28H6V4H12V2ZM14 4V6H18V4H14ZM8 8V26H24V8H8ZM10 12H22V14H10V12ZM10 17H18V19H10V17Z"
-                    />
-                  </svg>
-                </span>
-                <span class="tile__label">Interaction</span>
-                <span class="tile__count">7 studies</span>
-              </a>
-              <a class="tile" href="#">
-                <span class="tile__icon" aria-hidden="true">
-                  <svg viewBox="0 0 32 32">
-                    <path
-                      d="M4 6H28V8H4V6ZM4 12H20V14H4V12ZM4 18H24V20H4V18ZM4 24H16V26H4V24Z"
-                    />
-                  </svg>
-                </span>
-                <span class="tile__label">Research</span>
-                <span class="tile__count">4 reports</span>
-              </a>
-              <a class="tile" href="#">
-                <span class="tile__icon" aria-hidden="true">
-                  <svg viewBox="0 0 32 32">
-                    <path
-                      d="M16 2L20.5 11.5L30 12.5L23 19.5L25 29L16 24L7 29L9 19.5L2 12.5L11.5 11.5L16 2Z"
-                    />
-                  </svg>
-                </span>
-                <span class="tile__label">Systems</span>
-                <span class="tile__count">2 libraries</span>
-              </a>
-              <a class="tile" href="#">
-                <span class="tile__icon" aria-hidden="true">
-                  <svg viewBox="0 0 32 32">
-                    <path
-                      d="M6 4H26C27.1 4 28 4.9 28 6V26C28 27.1 27.1 28 26 28H6C4.9 28 4 27.1 4 26V6C4 4.9 4.9 4 6 4ZM6 6V26H26V6H6ZM10 10H22V12H10V10ZM10 15H18V17H10V15Z"
-                    />
-                  </svg>
-                </span>
-                <span class="tile__label">Prototypes</span>
-                <span class="tile__count">9 flows</span>
-              </a>
-            </div>
-          </section>
-
-          <section class="section" aria-labelledby="featured-title">
-            <div class="section__head">
-              <h2 class="section__title" id="featured-title">Spotlight</h2>
-              <a class="section__link" href="#">Read full study</a>
-            </div>
-            <a class="resource-card" href="#">
-              <div class="resource-card__media">
-                <img
-                  src="https://picsum.photos/seed/ibm-docs-design-system/343/148"
-                  alt="Sentinel access console interface preview"
-                  width="343"
-                  height="148"
-                />
-                <span class="resource-card__tag">Featured</span>
-              </div>
-              <div class="resource-card__body">
-                <p class="resource-card__meta">Security · 2025</p>
-                <h3 class="resource-card__title">Sentinel Access Console</h3>
-                <p class="resource-card__desc">
-                  Role-based admin UI for identity teams: permission matrices, audit trails, and documented empty states for engineering handoff.
-                </p>
-              </div>
-            </a>
-
-            <div class="status-strip" role="status" aria-label="Research coverage">
-              <span class="status-strip__label">Research</span>
-              <div class="status-strip__track" aria-hidden="true">
-                <div class="status-strip__fill"></div>
-              </div>
-              <span class="status-strip__value">18 sessions</span>
-            </div>
-          </section>
-
-          <section class="section" aria-labelledby="recent-title">
-            <div class="section__head">
-              <h2 class="section__title" id="recent-title">Latest updates</h2>
-              <a class="section__link" href="#">Archive</a>
-            </div>
-            <ul class="doc-list">
-              <li class="doc-list__item">
-                <a class="doc-list__link" href="#">
-                  <span class="doc-list__type">UI</span>
-                  <span>
-                    <div class="doc-list__title">Harbor Fleet Tracker</div>
-                    <div class="doc-list__sub">Mobile · 2024</div>
-                  </span>
-                  <span class="doc-list__arrow" aria-hidden="true">
-                    <svg viewBox="0 0 32 32">
-                      <path
-                        d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
-                      />
-                    </svg>
-                  </span>
-                </a>
-              </li>
-              <li class="doc-list__item">
-                <a class="doc-list__link" href="#">
-                  <span class="doc-list__type">IA</span>
-                  <span>
-                    <div class="doc-list__title">Meridian Study Portal</div>
-                    <div class="doc-list__sub">Healthcare · 2024</div>
-                  </span>
-                  <span class="doc-list__arrow" aria-hidden="true">
-                    <svg viewBox="0 0 32 32">
-                      <path
-                        d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
-                      />
-                    </svg>
-                  </span>
-                </a>
-              </li>
-              <li class="doc-list__item">
-                <a class="doc-list__link" href="#">
-                  <span class="doc-list__type">APP</span>
-                  <span>
-                    <div class="doc-list__title">Volt Campaign Builder</div>
-                    <div class="doc-list__sub">Dashboard · 2023</div>
-                  </span>
-                  <span class="doc-list__arrow" aria-hidden="true">
-                    <svg viewBox="0 0 32 32">
-                      <path
-                        d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
-                      />
-                    </svg>
-                  </span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </main>
-
-      <footer class="contact-dock">
-        <p class="contact-dock__meta">
-          <span class="contact-dock__dot" aria-hidden="true"></span>
-          Berlin · Open for Q3 2026
-        </p>
-        <div class="contact-dock__row">
-          <a class="contact-dock__hello" href="mailto:hello@evoss.design">
-            <svg viewBox="0 0 32 32" aria-hidden="true">
-              <path
-                d="M28 6H4C2.9 6 2 6.9 2 8V24C2 25.1 2.9 26 4 26H28C29.1 26 30 25.1 30 24V8C30 6.9 29.1 6 28 6ZM28 8L16 15L4 8H28ZM4 24V10.2L15.5 17.2C15.8 17.4 16.2 17.4 16.5 17.2L28 10.2V24H4Z"
-              />
-            </svg>
-            Say hello
-          </a>
-          <a class="contact-dock__book" href="#">
-            Book 30-min intro
-            <svg viewBox="0 0 32 32" aria-hidden="true">
-              <path
-                d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
-              />
-            </svg>
-          </a>
-        </div>
-      </footer>
-    </div>
+    <script>
+      /* Chip toggle — keyboard & pointer */
+      document.querySelectorAll(".chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll(".chip").forEach((c) => {
+            c.classList.remove("chip--active");
+            c.setAttribute("aria-pressed", "false");
+          });
+          chip.classList.add("chip--active");
+          chip.setAttribute("aria-pressed", "true");
+        });
+      });
+    </script>
   </body>
 </html>
