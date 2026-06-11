@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=375, initial-scale=1.0" />
+    <title>V1 — IBM Documentation Style Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── Design tokens ── */
+      :root {
+        --font-family-primary: "IBM Plex Sans", system-ui, -apple-system, system-ui,
+          ".SFNSText-Regular", sans-serif;
+        --font-size-xs: 12px;
+        --font-size-sm: 13.33px;
+        --font-size-md: 13.71px;
+        --font-size-lg: 14px;
+        --font-size-xl: 16px;
+        --font-size-2xl: 20px;
+        --font-size-3xl: 28px;
+        --font-size-4xl: 32px;
+        --font-weight-base: 400;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --line-height-base: 18.0001px;
+        --line-height-relaxed: 1.5;
+
+        --color-text-primary: #161616;
+        --color-text-secondary: #525252;
+        --color-text-tertiary: #ffffff;
+        --color-text-inverse: #0f62fe;
+        --color-surface-base: #000000;
+        --color-surface-muted: #f4f4f4;
+        --color-surface-strong: #393939;
+        --color-border-subtle: #e0e0e0;
+        --color-focus: #0f62fe;
+
+        --space-1: 0.5px;
+        --space-2: 1px;
+        --space-3: 6px;
+        --space-4: 12px;
+        --space-5: 14px;
+        --space-6: 15px;
+        --space-7: 16px;
+        --space-8: 32px;
+
+        --motion-instant: 70ms;
+        --motion-fast: 110ms;
+        --motion-normal: 150ms;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        width: 375px;
+        height: 812px;
+        overflow: hidden;
+      }
+
+      body {
+        width: 375px;
+        height: 812px;
+        font-family: var(--font-family-primary);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-base);
+        line-height: var(--line-height-base);
+        color: var(--color-text-primary);
+        background: var(--color-surface-muted);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      /* ── Focus-visible (WCAG) ── */
+      :focus {
+        outline: none;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--color-focus);
+        outline-offset: 2px;
+      }
+
+      /* ── App shell ── */
+      .app {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      /* ── Top bar ── */
+      .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-7) var(--space-7) var(--space-4);
+        background: var(--color-surface-base);
+        color: var(--color-text-tertiary);
+        flex-shrink: 0;
+      }
+
+      .top-bar__brand {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .top-bar__label {
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #a8a8a8;
+      }
+
+      .top-bar__name {
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.25;
+      }
+
+      .top-bar__actions {
+        display: flex;
+        gap: var(--space-3);
+      }
+
+      .icon-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        color: var(--color-text-tertiary);
+        cursor: pointer;
+        transition: background var(--motion-fast) ease;
+      }
+
+      .icon-btn:hover {
+        background: var(--color-surface-strong);
+      }
+
+      .icon-btn:active {
+        background: #525252;
+      }
+
+      .icon-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+
+      /* ── Scrollable main ── */
+      .main {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .main::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* ── Hero ── */
+      .hero {
+        background: var(--color-surface-base);
+        color: var(--color-text-tertiary);
+        padding: 0 var(--space-7) var(--space-8);
+      }
+
+      .hero__role {
+        font-size: var(--font-size-sm);
+        color: #c6c6c6;
+        margin-bottom: var(--space-4);
+      }
+
+      .hero__headline {
+        font-size: var(--font-size-3xl);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin-bottom: var(--space-5);
+      }
+
+      .hero__desc {
+        font-size: var(--font-size-lg);
+        line-height: var(--line-height-relaxed);
+        color: #a8a8a8;
+        max-width: 320px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-4);
+        margin-top: var(--space-8);
+        padding-top: var(--space-7);
+        border-top: var(--space-2) solid var(--color-surface-strong);
+      }
+
+      .stat__value {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.2;
+      }
+
+      .stat__label {
+        font-size: var(--font-size-xs);
+        color: #a8a8a8;
+        margin-top: var(--space-3);
+      }
+
+      /* ── Section ── */
+      .section {
+        padding: var(--space-8) var(--space-7) 0;
+      }
+
+      .section__header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: var(--space-7);
+      }
+
+      .section__title {
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-text-primary);
+      }
+
+      .section__link {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-inverse);
+        text-decoration: none;
+        transition: opacity var(--motion-fast) ease;
+      }
+
+      .section__link:hover {
+        text-decoration: underline;
+      }
+
+      .section__link:active {
+        opacity: 0.8;
+      }
+
+      /* ── Filter chips ── */
+      .chip-row {
+        display: flex;
+        gap: var(--space-3);
+        overflow-x: auto;
+        padding-bottom: var(--space-4);
+        margin: 0 calc(-1 * var(--space-7));
+        padding-left: var(--space-7);
+        padding-right: var(--space-7);
+        scrollbar-width: none;
+      }
+
+      .chip-row::-webkit-scrollbar {
+        display: none;
+      }
+
+      .chip {
+        flex-shrink: 0;
+        padding: var(--space-3) var(--space-5);
+        font-family: inherit;
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+        line-height: var(--line-height-base);
+        border: var(--space-2) solid var(--color-border-subtle);
+        border-radius: 0;
+        background: #ffffff;
+        color: var(--color-text-primary);
+        cursor: pointer;
+        transition:
+          background var(--motion-fast) ease,
+          border-color var(--motion-fast) ease,
+          color var(--motion-fast) ease;
+        white-space: nowrap;
+      }
+
+      .chip:hover {
+        background: var(--color-surface-muted);
+        border-color: #c6c6c6;
+      }
+
+      .chip--active {
+        background: var(--color-surface-base);
+        border-color: var(--color-surface-base);
+        color: var(--color-text-tertiary);
+      }
+
+      .chip--active:hover {
+        background: var(--color-surface-strong);
+        border-color: var(--color-surface-strong);
+      }
+
+      .chip:active {
+        transform: scale(0.98);
+      }
+
+      /* ── Featured card ── */
+      .featured-card {
+        display: block;
+        background: #ffffff;
+        border: var(--space-2) solid var(--color-border-subtle);
+        text-decoration: none;
+        color: inherit;
+        transition:
+          border-color var(--motion-normal) ease,
+          box-shadow var(--motion-normal) ease;
+      }
+
+      .featured-card:hover {
+        border-color: #c6c6c6;
+      }
+
+      .featured-card:active {
+        border-color: var(--color-text-inverse);
+      }
+
+      .featured-card__visual {
+        height: 160px;
+        background: linear-gradient(135deg, #393939 0%, #161616 100%);
+        display: flex;
+        align-items: flex-end;
+        padding: var(--space-7);
+      }
+
+      .featured-card__badge {
+        display: inline-block;
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        background: var(--color-text-inverse);
+        color: var(--color-text-tertiary);
+      }
+
+      .featured-card__body {
+        padding: var(--space-7);
+      }
+
+      .featured-card__meta {
+        font-size: var(--font-size-xs);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-3);
+      }
+
+      .featured-card__title {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.25;
+        margin-bottom: var(--space-4);
+      }
+
+      .featured-card__desc {
+        font-size: var(--font-size-md);
+        color: var(--color-text-secondary);
+        line-height: var(--line-height-relaxed);
+      }
+
+      /* ── Project list ── */
+      .project-list {
+        list-style: none;
+        background: #ffffff;
+        border: var(--space-2) solid var(--color-border-subtle);
+      }
+
+      .project-item {
+        border-bottom: var(--space-2) solid var(--color-border-subtle);
+      }
+
+      .project-item:last-child {
+        border-bottom: none;
+      }
+
+      .project-item__link {
+        display: flex;
+        align-items: center;
+        gap: var(--space-7);
+        padding: var(--space-6) var(--space-7);
+        text-decoration: none;
+        color: inherit;
+        transition: background var(--motion-fast) ease;
+      }
+
+      .project-item__link:hover {
+        background: var(--color-surface-muted);
+      }
+
+      .project-item__link:active {
+        background: #e8e8e8;
+      }
+
+      .project-item__index {
+        flex-shrink: 0;
+        width: 28px;
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-secondary);
+        text-align: center;
+      }
+
+      .project-item__content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .project-item__title {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .project-item__meta {
+        font-size: var(--font-size-xs);
+        color: var(--color-text-secondary);
+        margin-top: var(--space-2);
+      }
+
+      .project-item__arrow {
+        flex-shrink: 0;
+        color: var(--color-text-inverse);
+      }
+
+      .project-item__arrow svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
+      /* ── CTA footer ── */
+      .cta-bar {
+        flex-shrink: 0;
+        padding: var(--space-7);
+        background: #ffffff;
+        border-top: var(--space-2) solid var(--color-border-subtle);
+        display: flex;
+        gap: var(--space-4);
+      }
+
+      .btn {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-3);
+        padding: var(--space-5) var(--space-7);
+        font-family: inherit;
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
+        line-height: var(--line-height-base);
+        border: none;
+        border-radius: 0;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          background var(--motion-fast) ease,
+          color var(--motion-fast) ease,
+          opacity var(--motion-fast) ease;
+      }
+
+      .btn--primary {
+        background: var(--color-text-inverse);
+        color: var(--color-text-tertiary);
+      }
+
+      .btn--primary:hover {
+        background: #0353e9;
+      }
+
+      .btn--primary:active {
+        background: #002d9c;
+      }
+
+      .btn--secondary {
+        background: transparent;
+        color: var(--color-text-primary);
+        border: var(--space-2) solid var(--color-text-primary);
+      }
+
+      .btn--secondary:hover {
+        background: var(--color-surface-muted);
+      }
+
+      .btn--secondary:active {
+        background: #e0e0e0;
+      }
+
+      .btn:disabled,
+      .btn--disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      .main__spacer {
+        height: var(--space-8);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="top-bar">
+        <div class="top-bar__brand">
+          <span class="top-bar__label">Portfolio</span>
+          <span class="top-bar__name">Lin Wei</span>
+        </div>
+        <div class="top-bar__actions">
+          <button class="icon-btn" type="button" aria-label="Search projects">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path
+                d="M29 27.5858L22.4508 21.0366C24.2643 18.9177 25.25 16.1443 25.25 13.125C25.25 6.76587 20.1091 1.625 13.75 1.625C7.39087 1.625 2.25 6.76587 2.25 13.125C2.25 19.4841 7.39087 24.625 13.75 24.625C16.7693 24.625 19.5427 23.6393 21.6616 21.8258L28.2108 28.375L29 27.5858ZM13.75 23.125C8.77944 23.125 4.75 19.0956 4.75 14.125C4.75 9.15444 8.77944 5.125 13.75 5.125C18.7206 5.125 22.75 9.15444 22.75 14.125C22.75 19.0956 18.7206 23.125 13.75 23.125Z"
+              />
+            </svg>
+          </button>
+          <button class="icon-btn" type="button" aria-label="Open menu">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M4 8H28V10H4V8ZM4 15H28V17H4V15ZM4 22H28V24H4V22Z" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="main" id="main-content">
+        <section class="hero" aria-labelledby="hero-heading">
+          <p class="hero__role">Product &amp; Visual Designer</p>
+          <h1 class="hero__headline" id="hero-heading">
+            Building trustworthy<br />experiences at scale
+          </h1>
+          <p class="hero__desc">
+            Focused on design systems, documentation products, and B2B interfaces. Delivering production-ready work with clear information architecture and accessibility standards.
+          </p>
+          <dl class="stats">
+            <div>
+              <dt class="stat__value">12+</dt>
+              <dd class="stat__label">Featured projects</dd>
+            </div>
+            <div>
+              <dt class="stat__value">6 yr</dt>
+              <dd class="stat__label">Experience</dd>
+            </div>
+            <div>
+              <dt class="stat__value">3</dt>
+              <dd class="stat__label">Design systems</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="section" aria-labelledby="filter-heading">
+          <h2 class="visually-hidden" id="filter-heading">Project category filters</h2>
+          <div class="chip-row" role="toolbar" aria-label="Project categories">
+            <button class="chip chip--active" type="button" aria-pressed="true">
+              All
+            </button>
+            <button class="chip" type="button" aria-pressed="false">Product UI</button>
+            <button class="chip" type="button" aria-pressed="false">Design Systems</button>
+            <button class="chip" type="button" aria-pressed="false">Brand Identity</button>
+            <button class="chip" type="button" aria-pressed="false">Documentation UX</button>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="featured-heading">
+          <div class="section__header">
+            <h2 class="section__title" id="featured-heading">Featured work</h2>
+            <a class="section__link" href="#">View all</a>
+          </div>
+          <a class="featured-card" href="#">
+            <div class="featured-card__visual">
+              <span class="featured-card__badge">Featured</span>
+            </div>
+            <div class="featured-card__body">
+              <p class="featured-card__meta">Design System · 2025</p>
+              <h3 class="featured-card__title">Enterprise Docs Design System</h3>
+              <p class="featured-card__desc">
+                Token-driven component library for a technical documentation platform, covering 40+ component states and WCAG 2.2 AA acceptance criteria.
+              </p>
+            </div>
+          </a>
+        </section>
+
+        <section class="section" aria-labelledby="projects-heading">
+          <div class="section__header">
+            <h2 class="section__title" id="projects-heading">Recent projects</h2>
+            <a class="section__link" href="#">Archive</a>
+          </div>
+          <ul class="project-list">
+            <li class="project-item">
+              <a class="project-item__link" href="#">
+                <span class="project-item__index">01</span>
+                <span class="project-item__content">
+                  <span class="project-item__title">Cloud Console Redesign</span>
+                  <span class="project-item__meta">Product UI · 2025</span>
+                </span>
+                <span class="project-item__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">
+                    <path
+                      d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </li>
+            <li class="project-item">
+              <a class="project-item__link" href="#">
+                <span class="project-item__index">02</span>
+                <span class="project-item__content">
+                  <span class="project-item__title">Developer Portal IA</span>
+                  <span class="project-item__meta">Information Architecture · 2024</span>
+                </span>
+                <span class="project-item__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">
+                    <path
+                      d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </li>
+            <li class="project-item">
+              <a class="project-item__link" href="#">
+                <span class="project-item__index">03</span>
+                <span class="project-item__content">
+                  <span class="project-item__title">Fintech Mobile Onboarding</span>
+                  <span class="project-item__meta">Mobile · 2024</span>
+                </span>
+                <span class="project-item__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">
+                    <path
+                      d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </li>
+            <li class="project-item">
+              <a class="project-item__link" href="#">
+                <span class="project-item__index">04</span>
+                <span class="project-item__content">
+                  <span class="project-item__title">Brand Guidelines Toolkit</span>
+                  <span class="project-item__meta">Brand Identity · 2023</span>
+                </span>
+                <span class="project-item__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">
+                    <path
+                      d="M18 6L16.57 7.393L23.15 14H4V16H23.15L16.57 22.573L18 24L27 15L18 6Z"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <div class="main__spacer" aria-hidden="true"></div>
+      </main>
+
+      <footer class="cta-bar">
+        <a class="btn btn--secondary" href="mailto:hello@linwei.design">Email</a>
+        <a class="btn btn--primary" href="#">Download résumé</a>
+      </footer>
+    </div>
+
+    <style>
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+
+    <script>
+      /* Chip toggle — keyboard & pointer */
+      document.querySelectorAll(".chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll(".chip").forEach((c) => {
+            c.classList.remove("chip--active");
+            c.setAttribute("aria-pressed", "false");
+          });
+          chip.classList.add("chip--active");
+          chip.setAttribute("aria-pressed", "true");
+        });
+      });
+    </script>
+  </body>
+</html>

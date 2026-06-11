@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=375, height=812, initial-scale=1.0" />
+  <title>Portfolio — Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #161616;
+      --surface: #000000;
+      --surface-raised: #262626;
+      --text-primary: #ffffff;
+      --text-muted: #525252;
+      --text-helper: #6f6f6f;
+      --border: #393939;
+      --accent: #0043ce;
+      --brand: #0f62fe;
+      --success: #24a148;
+      --ai-border: #4589ff;
+      --grid: 4px;
+    }
+
+    html {
+      width: 375px;
+      height: 812px;
+      overflow: hidden;
+    }
+
+    body {
+      width: 375px;
+      height: 812px;
+      overflow: hidden;
+      margin: 0;
+      background: var(--bg);
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .device {
+      width: 375px;
+      height: 812px;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Status bar */
+    .status-bar {
+      height: 44px;
+      padding: 12px 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .status-time {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+
+    .status-icons {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .status-icons span {
+      display: block;
+      background: var(--text-primary);
+      border-radius: 1px;
+    }
+
+    .signal { width: 16px; height: 10px; opacity: 0.9; }
+    .wifi { width: 14px; height: 10px; opacity: 0.9; }
+    .battery {
+      width: 22px;
+      height: 10px;
+      border: 1px solid var(--text-primary);
+      position: relative;
+      background: transparent;
+    }
+
+    .battery::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      bottom: 2px;
+      width: 14px;
+      background: var(--text-primary);
+      border-radius: 1px;
+    }
+
+    /* Scrollable main */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
+
+    .main::-webkit-scrollbar { display: none; }
+
+    /* Header */
+    .header {
+      padding: 8px 16px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .logo span { color: var(--brand); }
+
+    .avatar-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 1px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: border-color 200ms ease-out;
+    }
+
+    .avatar-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 0 16px 24px;
+      animation: fadeInDown 400ms ease-out both;
+    }
+
+    .hero-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 300;
+      line-height: 1.17;
+      letter-spacing: -0.4px;
+      margin-bottom: 12px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--brand);
+      font-weight: 600;
+    }
+
+    .hero-desc {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-helper);
+      margin-bottom: 20px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      flex: 1;
+      height: 40px;
+      background: var(--accent);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 1px;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 200ms ease-out;
+    }
+
+    .btn-primary:hover { background: var(--brand); }
+
+    .btn-primary:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    .btn-ghost {
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 1px;
+      color: var(--text-primary);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 200ms ease-out;
+    }
+
+    .btn-ghost:hover { border-color: var(--text-muted); }
+
+    /* Stats row */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 0 16px 24px;
+      animation: fadeInDown 400ms 80ms ease-out both;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1px;
+      padding: 12px;
+    }
+
+    .stat-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .stat-value.success { color: var(--success); }
+
+    /* Section */
+    .section {
+      padding: 0 16px 24px;
+      animation: fadeInDown 400ms 160ms ease-out both;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .section-link {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      color: var(--brand);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 200ms ease-out;
+    }
+
+    .section-link:hover { border-bottom-color: var(--brand); }
+
+    /* Featured project — hero card */
+    .featured {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: border-color 200ms ease-out;
+    }
+
+    .featured:hover { border-color: var(--ai-border); }
+
+    .featured-visual {
+      height: 140px;
+      background: linear-gradient(135deg, #262626 0%, #161616 50%, #0043ce 100%);
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+    }
+
+    .featured-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(69, 137, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(rgba(69, 137, 255, 0.08) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    .featured-tag {
+      position: relative;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 1px;
+    }
+
+    .featured-body {
+      padding: 12px 16px 16px;
+    }
+
+    .featured-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .featured-meta {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Project list */
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .project-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1px;
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color 200ms ease-out;
+    }
+
+    .project-row:hover { border-color: var(--text-muted); }
+
+    .project-thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 1px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .project-thumb.a { background: linear-gradient(160deg, #393939, #0f62fe); }
+    .project-thumb.b { background: linear-gradient(160deg, #262626, #24a148); }
+    .project-thumb.c { background: linear-gradient(160deg, #393939, #da1e28); }
+
+    .project-info { flex: 1; min-width: 0; }
+
+    .project-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .project-type {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .project-arrow {
+      color: var(--text-muted);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-bottom: 8px;
+      animation: fadeInDown 400ms 240ms ease-out both;
+    }
+
+    .tag {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      color: var(--text-helper);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 1px;
+      background: var(--surface-raised);
+    }
+
+    /* Bottom nav */
+    .bottom-nav {
+      height: 72px;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-around;
+      padding: 8px 16px 20px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 12px;
+      border-radius: 1px;
+      transition: color 200ms ease-out;
+    }
+
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .nav-item.active {
+      color: var(--brand);
+    }
+
+    .nav-item:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .home-indicator {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: var(--text-muted);
+      border-radius: 2px;
+      opacity: 0.4;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero, .stats, .section, .tags {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="device" role="application" aria-label="Designer portfolio app">
+    <div class="status-bar" aria-hidden="true">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <span class="signal"></span>
+        <span class="wifi"></span>
+        <span class="battery"></span>
+      </div>
+    </div>
+
+    <div class="main">
+      <header class="header">
+        <div class="logo">Studio<span>.</span>NV</div>
+        <button class="avatar-btn" aria-label="Profile">NV</button>
+      </header>
+
+      <section class="hero">
+        <p class="hero-label">Product Designer</p>
+        <h1 class="hero-title">Crafting systems<br />with <em>precision</em></h1>
+        <p class="hero-desc">I design digital products where structure meets clarity — from enterprise platforms to mobile experiences.</p>
+        <div class="hero-actions">
+          <button class="btn-primary">View selected work</button>
+          <button class="btn-ghost" aria-label="Share profile">↗</button>
+        </div>
+      </section>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-label">Projects</div>
+          <div class="stat-value">48</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Clients</div>
+          <div class="stat-value">23</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Available</div>
+          <div class="stat-value success">Yes</div>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Featured</h2>
+          <a href="#" class="section-link">See all →</a>
+        </div>
+        <article class="featured">
+          <div class="featured-visual">
+            <span class="featured-tag">Case Study</span>
+          </div>
+          <div class="featured-body">
+            <h3 class="featured-name">Carbon Design Platform</h3>
+            <p class="featured-meta">IBM · Design System · 2025</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Recent work</h2>
+        </div>
+        <div class="project-list">
+          <article class="project-row">
+            <div class="project-thumb a" aria-hidden="true"></div>
+            <div class="project-info">
+              <div class="project-name">Atlas Banking App</div>
+              <div class="project-type">Mobile · Fintech</div>
+            </div>
+            <span class="project-arrow" aria-hidden="true">›</span>
+          </article>
+          <article class="project-row">
+            <div class="project-thumb b" aria-hidden="true"></div>
+            <div class="project-info">
+              <div class="project-name">Verde Health Dashboard</div>
+              <div class="project-type">Web · Healthcare</div>
+            </div>
+            <span class="project-arrow" aria-hidden="true">›</span>
+          </article>
+          <article class="project-row">
+            <div class="project-thumb c" aria-hidden="true"></div>
+            <div class="project-info">
+              <div class="project-name">Nova Commerce Rebrand</div>
+              <div class="project-type">Brand · E-commerce</div>
+            </div>
+            <span class="project-arrow" aria-hidden="true">›</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Expertise</h2>
+        </div>
+        <div class="tags">
+          <span class="tag">Design Systems</span>
+          <span class="tag">Mobile UX</span>
+          <span class="tag">Prototyping</span>
+          <span class="tag">Accessibility</span>
+          <span class="tag">Figma</span>
+          <span class="tag">Research</span>
+        </div>
+      </section>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-item active" aria-current="page">
+        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V9.5z"/></svg>
+        Home
+      </button>
+      <button class="nav-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Work
+      </button>
+      <button class="nav-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        About
+      </button>
+      <button class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16v12H5.2L4 17.2V4z"/><path d="M8 9h8M8 12h5"/></svg>
+        Contact
+      </button>
+    </nav>
+
+    <div class="home-indicator" aria-hidden="true"></div>
+  </div>
+</body>
+</html>

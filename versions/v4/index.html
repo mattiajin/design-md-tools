@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=375, initial-scale=1.0" />
+    <title>V4 — IBM Carbon (awesome-design-md)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #0f62fe;
+        --on-primary: #ffffff;
+        --ink: #161616;
+        --ink-muted: #525252;
+        --ink-subtle: #8c8c8c;
+        --canvas: #ffffff;
+        --surface-1: #f4f4f4;
+        --surface-2: #e0e0e0;
+        --inverse-canvas: #161616;
+        --inverse-ink: #ffffff;
+        --inverse-ink-muted: #c6c6c6;
+        --hairline: #e0e0e0;
+        --hairline-strong: #161616;
+        --blue-60: #0043ce;
+        --blue-80: #002d9c;
+        --blue-hover: #0050e6;
+        --motion: 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        width: 375px;
+        height: 812px;
+        overflow: hidden;
+      }
+
+      body {
+        width: 375px;
+        height: 812px;
+        overflow: hidden;
+        font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.29;
+        letter-spacing: 0.16px;
+        color: var(--ink);
+        background: var(--canvas);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      :focus {
+        outline: none;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .shell {
+        display: flex;
+        flex-direction: column;
+        width: 375px;
+        height: 812px;
+      }
+
+      .utility-bar {
+        flex-shrink: 0;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--surface-1);
+        font-size: 12px;
+        letter-spacing: 0.32px;
+        color: var(--ink-muted);
+      }
+
+      .top-nav {
+        flex-shrink: 0;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        background: var(--canvas);
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .top-nav__logo {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.16px;
+      }
+
+      .btn-ghost {
+        border: none;
+        background: var(--canvas);
+        color: var(--primary);
+        font-family: inherit;
+        font-size: 14px;
+        letter-spacing: 0.16px;
+        padding: 12px 16px;
+        cursor: pointer;
+        transition: background var(--motion);
+      }
+
+      .btn-ghost:hover {
+        background: var(--surface-1);
+      }
+
+      .scroll {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: none;
+      }
+
+      .scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .hero-card {
+        padding: 32px 16px;
+        background: var(--canvas);
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .hero-card__title {
+        font-size: 42px;
+        font-weight: 300;
+        line-height: 1.2;
+        margin-bottom: 12px;
+      }
+
+      .hero-card__lead {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 1.5;
+        letter-spacing: 0;
+        color: var(--ink-muted);
+        margin-bottom: 24px;
+        max-width: 30ch;
+      }
+
+      .hero-card__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .btn-primary {
+        border: none;
+        background: var(--primary);
+        color: var(--on-primary);
+        font-family: inherit;
+        font-size: 14px;
+        letter-spacing: 0.16px;
+        padding: 12px 16px;
+        cursor: pointer;
+        transition: background var(--motion);
+      }
+
+      .btn-primary:hover {
+        background: var(--blue-hover);
+      }
+
+      .btn-primary:active {
+        background: var(--blue-80);
+      }
+
+      .btn-secondary {
+        border: none;
+        background: var(--ink);
+        color: var(--inverse-ink);
+        font-family: inherit;
+        font-size: 14px;
+        letter-spacing: 0.16px;
+        padding: 12px 16px;
+        cursor: pointer;
+        transition: background var(--motion);
+      }
+
+      .btn-secondary:hover {
+        background: #262626;
+      }
+
+      .btn-tertiary {
+        border: 1px solid var(--primary);
+        background: var(--canvas);
+        color: var(--primary);
+        font-family: inherit;
+        font-size: 14px;
+        letter-spacing: 0.16px;
+        padding: 12px 16px;
+        cursor: pointer;
+        transition: background var(--motion), color var(--motion);
+      }
+
+      .btn-tertiary:hover {
+        background: var(--surface-1);
+      }
+
+      .band {
+        background: var(--surface-1);
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .product-tabs {
+        display: flex;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .product-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .product-tab {
+        flex-shrink: 0;
+        padding: 16px 20px;
+        border: none;
+        border-bottom: 1px solid var(--hairline);
+        background: var(--canvas);
+        font-family: inherit;
+        font-size: 14px;
+        color: var(--ink-muted);
+        cursor: pointer;
+        transition: color var(--motion), border-color var(--motion);
+      }
+
+      .product-tab:hover {
+        color: var(--ink);
+        background: var(--surface-1);
+      }
+
+      .product-tab--selected {
+        font-weight: 600;
+        color: var(--ink);
+        border-bottom: 2px solid var(--primary);
+      }
+
+      .section {
+        padding: 24px 16px;
+      }
+
+      .section__headline {
+        font-size: 32px;
+        font-weight: 400;
+        line-height: 1.25;
+        margin-bottom: 8px;
+      }
+
+      .section__sub {
+        font-size: 14px;
+        color: var(--ink-muted);
+        margin-bottom: 16px;
+      }
+
+      .feature-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        background: var(--hairline);
+        border: 1px solid var(--hairline);
+      }
+
+      .feature-card {
+        padding: 24px;
+        background: var(--canvas);
+        text-decoration: none;
+        color: inherit;
+        transition: background var(--motion);
+      }
+
+      .feature-card:hover {
+        background: var(--surface-1);
+      }
+
+      .feature-card__tag {
+        font-size: 12px;
+        letter-spacing: 0.32px;
+        color: var(--ink-subtle);
+        margin-bottom: 8px;
+      }
+
+      .feature-card__title {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1.33;
+        margin-bottom: 8px;
+      }
+
+      .feature-card__body {
+        font-size: 14px;
+        line-height: 1.29;
+        letter-spacing: 0.16px;
+        color: var(--ink-muted);
+        margin-bottom: 12px;
+      }
+
+      .feature-card__link {
+        font-size: 14px;
+        color: var(--primary);
+        font-weight: 400;
+      }
+
+      .marquee-label {
+        padding: 16px 16px 8px;
+        font-size: 12px;
+        letter-spacing: 0.32px;
+        color: var(--ink-muted);
+        background: var(--canvas);
+      }
+
+      .marquee {
+        display: flex;
+        gap: 1px;
+        overflow-x: auto;
+        padding: 0 16px 24px;
+        background: var(--canvas);
+        scrollbar-width: none;
+      }
+
+      .marquee::-webkit-scrollbar {
+        display: none;
+      }
+
+      .customer-logo-tile {
+        flex-shrink: 0;
+        width: 112px;
+        height: 72px;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: var(--canvas);
+        border: 1px solid var(--hairline);
+        font-size: 12px;
+        letter-spacing: 0.32px;
+        color: var(--ink-muted);
+        text-align: center;
+      }
+
+      .training-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--hairline);
+        border: 1px solid var(--hairline);
+      }
+
+      .resource-tile {
+        padding: 16px;
+        background: var(--canvas);
+        min-height: 100px;
+      }
+
+      .resource-tile__title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .resource-tile__meta {
+        font-size: 12px;
+        letter-spacing: 0.32px;
+        color: var(--ink-muted);
+      }
+
+      .newsletter {
+        padding: 24px 16px;
+        background: var(--surface-1);
+        border-top: 1px solid var(--hairline);
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .newsletter__title {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1.4;
+        margin-bottom: 8px;
+      }
+
+      .newsletter__copy {
+        font-size: 14px;
+        color: var(--ink-muted);
+        margin-bottom: 16px;
+      }
+
+      .newsletter__form {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .newsletter-input {
+        width: 100%;
+        padding: 11px 16px;
+        border: none;
+        border-bottom: 1px solid var(--hairline);
+        background: var(--surface-1);
+        font-family: inherit;
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: 0.16px;
+        color: var(--ink);
+        transition: border-color var(--motion), background var(--motion);
+      }
+
+      .newsletter-input::placeholder {
+        color: var(--ink-subtle);
+      }
+
+      .newsletter-input:focus-visible {
+        background: var(--canvas);
+        border-bottom: 2px solid var(--primary);
+        outline: none;
+      }
+
+      .cta-banner {
+        padding: 32px 16px;
+        background: var(--primary);
+        color: var(--on-primary);
+      }
+
+      .cta-banner__title {
+        font-size: 32px;
+        font-weight: 400;
+        line-height: 1.25;
+        margin-bottom: 8px;
+      }
+
+      .cta-banner__copy {
+        font-size: 14px;
+        line-height: 1.29;
+        letter-spacing: 0.16px;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 16px;
+      }
+
+      .footer {
+        padding: 32px 16px 24px;
+        background: var(--inverse-canvas);
+        color: var(--inverse-ink-muted);
+      }
+
+      .footer__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px 16px;
+        margin-bottom: 24px;
+      }
+
+      .footer__col h4 {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--inverse-ink);
+        margin-bottom: 12px;
+      }
+
+      .footer__col a {
+        display: block;
+        font-size: 14px;
+        color: var(--inverse-ink-muted);
+        text-decoration: none;
+        margin-bottom: 8px;
+      }
+
+      .footer__col a:hover {
+        color: var(--inverse-ink);
+        text-decoration: underline;
+      }
+
+      .footer__legal {
+        font-size: 12px;
+        letter-spacing: 0.32px;
+        padding-top: 16px;
+        border-top: 1px solid var(--inverse-ink-muted);
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <div class="utility-bar">New case study — Enterprise design ops</div>
+
+      <header class="top-nav">
+        <span class="top-nav__logo">Marcus Webb</span>
+        <button class="btn-ghost" type="button">Contact</button>
+      </header>
+
+      <div class="scroll">
+        <section class="hero-card" aria-labelledby="hero-title">
+          <h1 class="hero-card__title" id="hero-title">
+            Clarity at enterprise scale.
+          </h1>
+          <p class="hero-card__lead">
+            I help B2B teams ship documentation, dashboards, and design systems
+            with Carbon-level rigor.
+          </p>
+          <div class="hero-card__actions">
+            <button class="btn-primary" type="button">View selected work</button>
+            <button class="btn-secondary" type="button">Download résumé</button>
+          </div>
+        </section>
+
+        <div class="band">
+          <div class="product-tabs" role="tablist" aria-label="Portfolio sections">
+            <button
+              class="product-tab product-tab--selected"
+              type="button"
+              role="tab"
+              aria-selected="true"
+            >
+              Case studies
+            </button>
+            <button class="product-tab" type="button" role="tab" aria-selected="false">
+              Systems
+            </button>
+            <button class="product-tab" type="button" role="tab" aria-selected="false">
+              Articles
+            </button>
+            <button class="product-tab" type="button" role="tab" aria-selected="false">
+              Talks
+            </button>
+          </div>
+        </div>
+
+        <section class="section" aria-labelledby="work-heading">
+          <h2 class="section__headline" id="work-heading">Selected work</h2>
+          <p class="section__sub">
+            Product design for regulated industries and developer platforms.
+          </p>
+
+          <div class="feature-stack">
+            <a class="feature-card" href="#">
+              <p class="feature-card__tag">Platform · 2025</p>
+              <h3 class="feature-card__title">Telemetry Console</h3>
+              <p class="feature-card__body">
+                Dense observability UI for SRE teams — tabular numerics, role-based
+                views, and WCAG AA compliance across 40+ screens.
+              </p>
+              <span class="feature-card__link">Explore project →</span>
+            </a>
+            <a class="feature-card" href="#">
+              <p class="feature-card__tag">Design system · 2024</p>
+              <h3 class="feature-card__title">Northstar Tokens</h3>
+              <p class="feature-card__body">
+                Semantic token layer and Figma library adopted by three product
+                squads in six months.
+              </p>
+              <span class="feature-card__link">Explore project →</span>
+            </a>
+            <a class="feature-card" href="#">
+              <p class="feature-card__tag">Docs · 2024</p>
+              <h3 class="feature-card__title">API Reference IA</h3>
+              <p class="feature-card__body">
+                Restructured navigation and in-page anchors for a public API catalog
+                with 1.2M monthly visits.
+              </p>
+              <span class="feature-card__link">Explore project →</span>
+            </a>
+          </div>
+        </section>
+
+        <p class="marquee-label">Organizations I've partnered with</p>
+        <div class="marquee" aria-label="Client logos">
+          <div class="customer-logo-tile">Axiom Cloud</div>
+          <div class="customer-logo-tile">Helix Data</div>
+          <div class="customer-logo-tile">Forge Health</div>
+          <div class="customer-logo-tile">Unitary Bank</div>
+          <div class="customer-logo-tile">Civic Labs</div>
+        </div>
+
+        <section class="section" aria-labelledby="resources-heading">
+          <h2 class="section__headline" id="resources-heading">Resources</h2>
+          <p class="section__sub">Writing and workshops on enterprise UX craft.</p>
+          <div class="training-row">
+            <article class="resource-tile">
+              <h3 class="resource-tile__title">Token audits</h3>
+              <p class="resource-tile__meta">Guide · 12 min read</p>
+            </article>
+            <article class="resource-tile">
+              <h3 class="resource-tile__title">Docs UX clinic</h3>
+              <p class="resource-tile__meta">Workshop · Remote</p>
+            </article>
+            <article class="resource-tile">
+              <h3 class="resource-tile__title">Carbon patterns</h3>
+              <p class="resource-tile__meta">Talk · Config 2024</p>
+            </article>
+            <article class="resource-tile">
+              <h3 class="resource-tile__title">Focus in data UI</h3>
+              <p class="resource-tile__meta">Essay · 8 min read</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="newsletter" aria-labelledby="newsletter-title">
+          <h2 class="newsletter__title" id="newsletter-title">Stay connected</h2>
+          <p class="newsletter__copy">
+            Quarterly notes on design systems, documentation UX, and shipping in
+            large orgs.
+          </p>
+          <form class="newsletter__form" action="#" method="get">
+            <label class="visually-hidden" for="email">Email address</label>
+            <input
+              class="newsletter-input"
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Business email"
+              autocomplete="email"
+            />
+            <button class="btn-primary" type="submit">Subscribe</button>
+          </form>
+        </section>
+
+        <aside class="cta-banner" aria-labelledby="cta-title">
+          <h2 class="cta-banner__title" id="cta-title">Planning a design system?</h2>
+          <p class="cta-banner__copy">
+            I take on a limited number of advisory engagements each quarter.
+          </p>
+          <button class="btn-tertiary" type="button">Schedule intro call</button>
+        </aside>
+
+        <footer class="footer">
+          <div class="footer__grid">
+            <div class="footer__col">
+              <h4>Work</h4>
+              <a href="#">Case studies</a>
+              <a href="#">Systems</a>
+              <a href="#">Process</a>
+            </div>
+            <div class="footer__col">
+              <h4>Connect</h4>
+              <a href="#">LinkedIn</a>
+              <a href="#">GitHub</a>
+              <a href="#">Email</a>
+            </div>
+          </div>
+          <p class="footer__legal">© 2026 Marcus Webb · Austin, TX</p>
+        </footer>
+      </div>
+    </div>
+
+    <style>
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+
+    <script>
+      document.querySelectorAll(".product-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".product-tab").forEach((t) => {
+            t.classList.remove("product-tab--selected");
+            t.setAttribute("aria-selected", "false");
+          });
+          tab.classList.add("product-tab--selected");
+          tab.setAttribute("aria-selected", "true");
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=375, initial-scale=1.0" />
+    <title>V3 — Carbon Portfolio Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cds-text-primary: #161616;
+        --cds-text-secondary: #525252;
+        --cds-text-helper: #6f6f6f;
+        --cds-text-inverse: #ffffff;
+        --cds-text-on-color: #ffffff;
+        --cds-link-primary: #0f62fe;
+        --cds-link-primary-hover: #0043ce;
+        --cds-background: #ffffff;
+        --cds-layer-01: #f4f4f4;
+        --cds-layer-02: #ffffff;
+        --cds-layer-inverse: #161616;
+        --cds-background-brand: #0f62fe;
+        --cds-background-inverse: #393939;
+        --cds-border-subtle: #e0e0e0;
+        --cds-focus: #0f62fe;
+        --cds-support-info: #0043ce;
+        --cds-icon-primary: #161616;
+        --cds-icon-on-color: #ffffff;
+
+        --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+        --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+        --space-03: 8px;
+        --space-04: 12px;
+        --space-05: 16px;
+        --space-06: 24px;
+        --space-07: 32px;
+
+        --motion-fast: 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        width: 375px;
+        height: 812px;
+        overflow: hidden;
+      }
+
+      body {
+        width: 375px;
+        height: 812px;
+        overflow: hidden;
+        font-family: var(--font-sans);
+        font-size: 14px;
+        line-height: 1.43;
+        color: var(--cds-text-primary);
+        background: var(--cds-layer-01);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      :focus {
+        outline: none;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--cds-focus);
+        outline-offset: 2px;
+      }
+
+      .app {
+        display: flex;
+        flex-direction: column;
+        width: 375px;
+        height: 812px;
+        background: var(--cds-layer-01);
+      }
+
+      /* ── Top shell ── */
+      .shell-header {
+        flex-shrink: 0;
+        background: var(--cds-layer-inverse);
+        color: var(--cds-text-on-color);
+      }
+
+      .status-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 44px;
+        padding: 12px var(--space-05) 0;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .status-bar__time {
+        font-variant-numeric: tabular-nums;
+      }
+
+      .status-bar__icons {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .status-bar__icons svg {
+        display: block;
+      }
+
+      .masthead {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 48px;
+        padding: 0 var(--space-05);
+        border-top: 1px solid #393939;
+      }
+
+      .masthead__brand {
+        display: flex;
+        align-items: center;
+        gap: var(--space-03);
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+
+      .masthead__mark {
+        display: grid;
+        place-items: center;
+        width: 24px;
+        height: 24px;
+        background: var(--cds-background-brand);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      .masthead__actions {
+        display: flex;
+        gap: 2px;
+      }
+
+      .icon-btn {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        transition: background var(--motion-fast);
+      }
+
+      .icon-btn:hover {
+        background: #393939;
+      }
+
+      .icon-btn:active {
+        background: #525252;
+      }
+
+      /* ── Scrollable main ── */
+      .main {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: none;
+      }
+
+      .main::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Leadspace */
+      .leadspace {
+        padding: var(--space-06) var(--space-05) var(--space-05);
+        background: var(--cds-layer-inverse);
+        color: var(--cds-text-on-color);
+      }
+
+      .leadspace__eyebrow {
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #a8a8a8;
+        margin-bottom: var(--space-03);
+      }
+
+      .leadspace__title {
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 1.125;
+        letter-spacing: -0.02em;
+        margin-bottom: var(--space-04);
+      }
+
+      .leadspace__desc {
+        font-size: 14px;
+        line-height: 1.5;
+        color: #c6c6c6;
+        max-width: 28ch;
+        margin-bottom: var(--space-05);
+      }
+
+      .leadspace__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-03);
+      }
+
+      .meta-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        background: #393939;
+        font-size: 12px;
+        color: #f4f4f4;
+      }
+
+      .meta-tag svg {
+        flex-shrink: 0;
+        opacity: 0.8;
+      }
+
+      /* Search */
+      .search-block {
+        padding: var(--space-05);
+        background: var(--cds-layer-02);
+        border-bottom: 1px solid var(--cds-border-subtle);
+      }
+
+      .search {
+        position: relative;
+      }
+
+      .search__icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--cds-text-secondary);
+        pointer-events: none;
+      }
+
+      .search__input {
+        width: 100%;
+        height: 40px;
+        padding: 0 12px 0 40px;
+        border: none;
+        background: var(--cds-layer-01);
+        font-family: inherit;
+        font-size: 14px;
+        color: var(--cds-text-primary);
+        transition: box-shadow var(--motion-fast);
+      }
+
+      .search__input::placeholder {
+        color: var(--cds-text-helper);
+      }
+
+      .search__input:hover {
+        background: #e8e8e8;
+      }
+
+      .search__input:focus-visible {
+        outline: 2px solid var(--cds-focus);
+        outline-offset: -2px;
+        background: var(--cds-layer-02);
+      }
+
+      /* Filter chips */
+      .filters {
+        display: flex;
+        gap: var(--space-03);
+        padding: 0 var(--space-05) var(--space-05);
+        background: var(--cds-layer-02);
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .filters::-webkit-scrollbar {
+        display: none;
+      }
+
+      .chip {
+        flex-shrink: 0;
+        height: 32px;
+        padding: 0 14px;
+        border: 1px solid var(--cds-border-subtle);
+        background: var(--cds-layer-02);
+        font-family: inherit;
+        font-size: 13px;
+        color: var(--cds-text-primary);
+        cursor: pointer;
+        transition: background var(--motion-fast), border-color var(--motion-fast);
+      }
+
+      .chip:hover {
+        background: var(--cds-layer-01);
+      }
+
+      .chip--selected {
+        background: var(--cds-layer-inverse);
+        border-color: var(--cds-layer-inverse);
+        color: var(--cds-text-on-color);
+      }
+
+      .chip--selected:hover {
+        background: #262626;
+      }
+
+      /* Section */
+      .section {
+        padding: var(--space-05) 0 0;
+      }
+
+      .section__header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        padding: 0 var(--space-05) var(--space-04);
+      }
+
+      .section__title {
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .section__link {
+        font-size: 14px;
+        color: var(--cds-link-primary);
+        text-decoration: none;
+        font-weight: 400;
+      }
+
+      .section__link:hover {
+        color: var(--cds-link-primary-hover);
+        text-decoration: underline;
+      }
+
+      /* Card grid — IBM docs pattern */
+      .card-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--cds-border-subtle);
+        margin: 0 var(--space-05);
+      }
+
+      .card {
+        display: flex;
+        flex-direction: column;
+        min-height: 168px;
+        padding: var(--space-05);
+        background: var(--cds-layer-02);
+        text-decoration: none;
+        color: inherit;
+        transition: background var(--motion-fast);
+      }
+
+      .card:hover {
+        background: #e8e8e8;
+      }
+
+      .card:active {
+        background: #e0e0e0;
+      }
+
+      .card--brand {
+        grid-column: 1 / -1;
+        min-height: 148px;
+        background: var(--cds-background-brand);
+        color: var(--cds-text-on-color);
+      }
+
+      .card--brand:hover {
+        background: var(--cds-link-primary-hover);
+      }
+
+      .card--brand:active {
+        background: var(--cds-support-info);
+      }
+
+      .card__eyebrow {
+        font-size: 12px;
+        color: var(--cds-text-secondary);
+        margin-bottom: auto;
+      }
+
+      .card--brand .card__eyebrow {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: var(--space-06);
+      }
+
+      .card__title {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.3;
+        margin-bottom: var(--space-03);
+      }
+
+      .card--brand .card__title {
+        font-size: 20px;
+      }
+
+      .card__copy {
+        font-size: 13px;
+        line-height: 1.45;
+        color: var(--cds-text-secondary);
+        margin-bottom: var(--space-04);
+      }
+
+      .card--brand .card__copy {
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      .card__footer {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: auto;
+        font-size: 14px;
+        color: var(--cds-link-primary);
+      }
+
+      .card--brand .card__footer {
+        color: var(--cds-text-on-color);
+      }
+
+      .card__footer svg {
+        flex-shrink: 0;
+      }
+
+      /* Project list */
+      .project-list {
+        margin: var(--space-05) var(--space-05) 0;
+        background: var(--cds-layer-02);
+        border: 1px solid var(--cds-border-subtle);
+      }
+
+      .project-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-04);
+        padding: var(--space-04) var(--space-05);
+        text-decoration: none;
+        color: inherit;
+        border-bottom: 1px solid var(--cds-border-subtle);
+        transition: background var(--motion-fast);
+      }
+
+      .project-row:last-child {
+        border-bottom: none;
+      }
+
+      .project-row:hover {
+        background: var(--cds-layer-01);
+      }
+
+      .project-row:active {
+        background: #e8e8e8;
+      }
+
+      .project-row__thumb {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        background: var(--cds-layer-01);
+        display: grid;
+        place-items: center;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--cds-text-secondary);
+        border: 1px solid var(--cds-border-subtle);
+      }
+
+      .project-row__body {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .project-row__title {
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .project-row__meta {
+        font-size: 12px;
+        color: var(--cds-text-secondary);
+        margin-top: 2px;
+      }
+
+      .project-row__arrow {
+        flex-shrink: 0;
+        color: var(--cds-link-primary);
+      }
+
+      /* CTA banner */
+      .cta-banner {
+        margin: var(--space-05);
+        padding: var(--space-05);
+        background: var(--cds-background-inverse);
+        color: var(--cds-text-on-color);
+      }
+
+      .cta-banner__title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      .cta-banner__copy {
+        font-size: 13px;
+        line-height: 1.5;
+        color: #c6c6c6;
+        margin-bottom: var(--space-04);
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        padding: 0 var(--space-05);
+        border: none;
+        background: var(--cds-background-brand);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--cds-text-on-color);
+        cursor: pointer;
+        transition: background var(--motion-fast);
+      }
+
+      .btn-primary:hover {
+        background: var(--cds-link-primary-hover);
+      }
+
+      .btn-primary:active {
+        background: var(--cds-support-info);
+      }
+
+      .main__spacer {
+        height: var(--space-05);
+      }
+
+      /* Bottom tab bar */
+      .tab-bar {
+        flex-shrink: 0;
+        display: flex;
+        height: 56px;
+        padding-bottom: env(safe-area-inset-bottom, 0);
+        background: var(--cds-layer-02);
+        border-top: 1px solid var(--cds-border-subtle);
+      }
+
+      .tab {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        border: none;
+        background: transparent;
+        font-family: inherit;
+        font-size: 11px;
+        color: var(--cds-text-secondary);
+        cursor: pointer;
+        transition: color var(--motion-fast);
+      }
+
+      .tab:hover {
+        color: var(--cds-text-primary);
+        background: var(--cds-layer-01);
+      }
+
+      .tab--active {
+        color: var(--cds-link-primary);
+      }
+
+      .tab--active .tab__icon {
+        color: var(--cds-link-primary);
+      }
+
+      .tab__icon {
+        color: var(--cds-icon-primary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app" role="application" aria-label="Designer portfolio">
+      <header class="shell-header">
+        <div class="status-bar" aria-hidden="true">
+          <span class="status-bar__time">9:41</span>
+          <div class="status-bar__icons">
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true">
+              <rect x="0" y="8" width="3" height="4" rx="0.5" />
+              <rect x="4.5" y="5" width="3" height="7" rx="0.5" />
+              <rect x="9" y="2" width="3" height="10" rx="0.5" />
+              <rect x="13.5" y="0" width="3" height="12" rx="0.5" />
+            </svg>
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true">
+              <path
+                d="M8 2.4C10.4 2.4 12.5 3.4 14.1 5L15.5 3.6C13.6 1.4 10.9 0 8 0 5.1 0 2.4 1.4 0.5 3.6L1.9 5C3.5 3.4 5.6 2.4 8 2.4ZM8 6.4C9.4 6.4 10.7 7 11.7 8L13.1 6.6C11.7 5.2 9.9 4.4 8 4.4 6.1 4.4 4.3 5.2 2.9 6.6L4.3 8C5.3 7 6.6 6.4 8 6.4ZM8 10.4C8.8 10.4 9.5 10.1 10.1 9.5L8 7.4 5.9 9.5C6.5 10.1 7.2 10.4 8 10.4Z"
+              />
+            </svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="currentColor" aria-hidden="true">
+              <rect x="0.5" y="0.5" width="21" height="11" rx="2" stroke="currentColor" fill="none" />
+              <rect x="2" y="2" width="17" height="8" rx="1" />
+              <rect x="23" y="4" width="2" height="4" rx="0.5" />
+            </svg>
+          </div>
+        </div>
+        <div class="masthead">
+          <div class="masthead__brand">
+            <span class="masthead__mark" aria-hidden="true">EL</span>
+            <span>Elena Liu</span>
+          </div>
+          <div class="masthead__actions">
+            <button class="icon-btn" type="button" aria-label="Notifications">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M10 2a5 5 0 0 0-5 5v2.6L3.3 12.8A1 1 0 0 0 4.2 14.5h11.6a1 1 0 0 0 .9-1.7L15 9.6V7a5 5 0 0 0-5-5zm0 16a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 10 18z"
+                />
+              </svg>
+            </button>
+            <button class="icon-btn" type="button" aria-label="Menu">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M3 5h14v1.5H3V5zm0 5h14v1.5H3V10zm0 5h14v1.5H3V15z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="main" id="main-content">
+        <section class="leadspace" aria-labelledby="leadspace-title">
+          <p class="leadspace__eyebrow">Product Designer</p>
+          <h1 class="leadspace__title" id="leadspace-title">Design systems<br />that ship.</h1>
+          <p class="leadspace__desc">
+            I build accessible, token-driven interfaces for teams who document as
+            carefully as they design.
+          </p>
+          <div class="leadspace__meta">
+            <span class="meta-tag">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M8 1a5 5 0 0 0-5 5c0 3.8 5 9 5 9s5-5.2 5-9a5 5 0 0 0-5-5zm0 2.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z"
+                />
+              </svg>
+              San Francisco
+            </span>
+            <span class="meta-tag">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zM7.25 4v4.5h4.25V7H8.75V4h-1.5z"
+                />
+              </svg>
+              Available Q3
+            </span>
+          </div>
+        </section>
+
+        <div class="search-block">
+          <label class="search" for="portfolio-search">
+            <span class="search__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M14.5 13.8l-3.9-3.9a5.5 5.5 0 1 0-1.1 1.1l3.9 3.9a.8.8 0 0 0 1.1-1.1zM6 10.2a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4z"
+                />
+              </svg>
+            </span>
+            <input
+              class="search__input"
+              id="portfolio-search"
+              type="search"
+              placeholder="Search projects, tools, case studies"
+              autocomplete="off"
+            />
+          </label>
+        </div>
+
+        <div class="filters" role="tablist" aria-label="Project categories">
+          <button class="chip chip--selected" type="button" role="tab" aria-selected="true">All work</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Product</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Brand</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Systems</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Motion</button>
+        </div>
+
+        <section class="section" aria-labelledby="featured-heading">
+          <div class="section__header">
+            <h2 class="section__title" id="featured-heading">Featured</h2>
+            <a class="section__link" href="#">View all</a>
+          </div>
+
+          <div class="card-grid">
+            <a class="card card--brand" href="#">
+              <span class="card__eyebrow">Case study · 2026</span>
+              <h3 class="card__title">Carbon Docs Redesign</h3>
+              <p class="card__copy">
+                Rebuilt navigation, search, and topic tiles for a 2M+ monthly
+                documentation audience.
+              </p>
+              <span class="card__footer">
+                Read case study
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 3l5 5-5 5V9H3V7h5V3z" />
+                </svg>
+              </span>
+            </a>
+
+            <a class="card" href="#">
+              <span class="card__eyebrow">Fintech</span>
+              <h3 class="card__title">Nova Banking</h3>
+              <p class="card__copy">Mobile onboarding flow</p>
+              <span class="card__footer">
+                Open
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 3l5 5-5 5V9H3V7h5V3z" />
+                </svg>
+              </span>
+            </a>
+
+            <a class="card" href="#">
+              <span class="card__eyebrow">Healthcare</span>
+              <h3 class="card__title">Pulse Health</h3>
+              <p class="card__copy">Patient portal IA</p>
+              <span class="card__footer">
+                Open
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 3l5 5-5 5V9H3V7h5V3z" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="recent-heading">
+          <div class="section__header">
+            <h2 class="section__title" id="recent-heading">Recent</h2>
+          </div>
+
+          <nav class="project-list" aria-label="Recent projects">
+            <a class="project-row" href="#">
+              <span class="project-row__thumb" aria-hidden="true">DS</span>
+              <span class="project-row__body">
+                <span class="project-row__title">Atlas Design System</span>
+                <span class="project-row__meta">Tokens · Components · Figma</span>
+              </span>
+              <span class="project-row__arrow" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M6 3l5 5-5 5V9H4V7h2V3z" />
+                </svg>
+              </span>
+            </a>
+            <a class="project-row" href="#">
+              <span class="project-row__thumb" aria-hidden="true">UX</span>
+              <span class="project-row__body">
+                <span class="project-row__title">Meridian Checkout</span>
+                <span class="project-row__meta">E-commerce · A/B testing</span>
+              </span>
+              <span class="project-row__arrow" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M6 3l5 5-5 5V9H4V7h2V3z" />
+                </svg>
+              </span>
+            </a>
+            <a class="project-row" href="#">
+              <span class="project-row__thumb" aria-hidden="true">BR</span>
+              <span class="project-row__body">
+                <span class="project-row__title">Lumen Rebrand</span>
+                <span class="project-row__meta">Identity · Guidelines</span>
+              </span>
+              <span class="project-row__arrow" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M6 3l5 5-5 5V9H4V7h2V3z" />
+                </svg>
+              </span>
+            </a>
+          </nav>
+        </section>
+
+        <aside class="cta-banner" aria-labelledby="cta-title">
+          <h3 class="cta-banner__title" id="cta-title">Open to senior product roles</h3>
+          <p class="cta-banner__copy">
+            Let's talk about design systems, documentation UX, and teams that ship
+            with accessibility built in.
+          </p>
+          <button class="btn-primary" type="button">Get in touch</button>
+        </aside>
+
+        <div class="main__spacer" aria-hidden="true"></div>
+      </main>
+
+      <nav class="tab-bar" aria-label="Primary navigation">
+        <button class="tab tab--active" type="button" aria-current="page">
+          <span class="tab__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M3 10.5 10 4l7 6.5V16a1 1 0 0 1-1 1h-4v-5H8v5H4a1 1 0 0 1-1-1v-5.5z" />
+            </svg>
+          </span>
+          Home
+        </button>
+        <button class="tab" type="button">
+          <span class="tab__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M3 4h14v2H3V4zm0 5h14v2H3V9zm0 5h14v2H3v-2z" />
+            </svg>
+          </span>
+          Work
+        </button>
+        <button class="tab" type="button">
+          <span class="tab__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 11c3.3 0 6.5 1.6 8.5 4.5H1.5C3.5 14.6 6.7 13 10 13z" />
+            </svg>
+          </span>
+          About
+        </button>
+        <button class="tab" type="button">
+          <span class="tab__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                d="M2 5.5A2.5 2.5 0 0 1 4.5 3h11A2.5 2.5 0 0 1 18 5.5v9A2.5 2.5 0 0 1 15.5 17h-11A2.5 2.5 0 0 1 2 14.5v-9zm2.5-.5a.5.5 0 0 0-.5.5v.4l6.5 4.1 6.5-4.1V5.5a.5.5 0 0 0-.5-.5h-11z"
+              />
+            </svg>
+          </span>
+          Contact
+        </button>
+      </nav>
+    </div>
+
+    <script>
+      document.querySelectorAll(".chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll(".chip").forEach((c) => {
+            c.classList.remove("chip--selected");
+            c.setAttribute("aria-selected", "false");
+          });
+          chip.classList.add("chip--selected");
+          chip.setAttribute("aria-selected", "true");
+        });
+      });
+
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".tab").forEach((t) => {
+            t.classList.remove("tab--active");
+            t.removeAttribute("aria-current");
+          });
+          tab.classList.add("tab--active");
+          tab.setAttribute("aria-current", "page");
+        });
+      });
+    </script>
+  </body>
+</html>
