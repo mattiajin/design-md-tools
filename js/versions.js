@@ -7,7 +7,10 @@
  * 1. 新建 versions/vN/index.html（375×812）
  * 2. 在 VERSIONS 末尾追加记录（id / preview 与文件夹名一致）
  *
- * 命名约定：tool = 对比变量，note = 规范来源差异（一句话，统一句式）
+ * 命名约定：
+ * - axis = 侧栏分区（none = 无规范，spec = 规范来源）
+ * - tool = 对比变量（工作流名称，非运行时）
+ * - note = 一句话差异，统一「类别 · 说明」句式
  *
  * referencePage.mobilePreview = 本地 375×812 参考页快照（外链通常无法 iframe）
  */
@@ -22,9 +25,10 @@ const VERSIONS = [
     id: "v1",
     date: "2026-06-11",
     status: "exploration",
-    tool: "Cursor",
-    note: "无规范 · 只给链接",
-    toolDetail: "无粘贴设计规范，直接让 Agent 根据参考链接生成",
+    axis: "none",
+    tool: "裸 prompt",
+    note: "无规范 · 首次生成",
+    toolDetail: "不提取、不写规范，只把参考页链接和一句话 prompt 交给 Cursor",
     referencePage: { ...IBM_DOCS_REFERENCE },
     summary:
       "Carbon tokens + IBM Plex，文档式搜索与 topic tiles，深色顶栏 + 浅色内容区，英文界面。",
@@ -43,8 +47,9 @@ const VERSIONS = [
     id: "v2",
     date: "2026-06-11",
     status: "exploration",
+    axis: "spec",
     tool: "design-md-chrome",
-    note: "规范全文 · 手动粘贴",
+    note: "规范来源 · 手动粘贴",
     toolDetail: "Chrome 扩展提取设计规范 → Cursor Skill 驱动生成",
     referencePage: { ...IBM_DOCS_REFERENCE },
     summary:
@@ -123,8 +128,9 @@ Concise, confident, implementation-focused.
     id: "v3",
     date: "2026-06-11",
     status: "exploration",
+    axis: "spec",
     tool: "designmaxxing",
-    note: "现场提取 · 自动生成规范",
+    note: "规范来源 · 自动提取",
     toolDetail: "designmaxxing extract 后，用提取结果作为 prompt 上下文",
     referencePage: { ...IBM_DOCS_REFERENCE },
     summary:
@@ -144,8 +150,9 @@ Concise, confident, implementation-focused.
     id: "v4",
     date: "2026-06-11",
     status: "exploration",
+    axis: "spec",
     tool: "awesome-design-md",
-    note: "预置规范 · 无需现场提取",
+    note: "规范来源 · 社区预置",
     toolDetail:
       "从 awesome-design-md 复制 ibm/DESIGN.md → Cursor 读取文件后生成页面",
     referencePage: { ...IBM_DOCS_REFERENCE },
@@ -172,8 +179,9 @@ Concise, confident, implementation-focused.
     id: "v5",
     date: "2026-06-11",
     status: "exploration",
+    axis: "spec",
     tool: "skillui",
-    note: "现场提取 + 预置规范",
+    note: "规范来源 · 提取 + 预置",
     toolDetail:
       "skillui --url 静态提取 IBM Docs → 读取 DESIGN.md + SKILL.md → Cursor 生成页面",
     referencePage: { ...IBM_DOCS_REFERENCE },
@@ -194,5 +202,50 @@ Concise, confident, implementation-focused.
       { label: "skillui", url: "https://github.com/amaancoderx/npxskillui" },
     ],
     preview: "versions/v5/index.html",
+  },
+  {
+    id: "v6",
+    date: "2026-06-11",
+    status: "exploration",
+    axis: "spec",
+    tool: "手写 DESIGN.md",
+    note: "规范来源 · 人工撰写",
+    toolDetail:
+      "人工分析 ibm.com/docs/en → 手写 versions/v6/DESIGN.md → Cursor 仅读该文件生成页面",
+    referencePage: { ...IBM_DOCS_REFERENCE },
+    summary:
+      "IBM Docs rhythm: dark masthead, 64px search hero, docs-card grid with 1px gaps, gray section bands, featured scroll, resource tiles, dual footer.",
+    description:
+      "仅依据 versions/v6/DESIGN.md（IBM Documentation 文档站规范）。深色 leadspace、方角卡片、蓝色 CTA 卡、无底栏 Tab。375×812，纯英文。",
+    prompt:
+      "参考刚刚提取的design.md设计一个设计师作品集移动端app主页（宽高写死，宽375高812），纯英文，输出为html，不要受其他项目影响",
+    tools: ["Cursor", "HTML / CSS"],
+    references: [
+      { label: "IBM Documentation", url: "https://www.ibm.com/docs/en" },
+      { label: "versions/v6/DESIGN.md", url: "versions/v6/DESIGN.md" },
+    ],
+    preview: "versions/v6/index.html",
+  },
+  {
+    id: "v7",
+    date: "2026-06-11",
+    status: "exploration",
+    axis: "none",
+    tool: "裸 prompt",
+    note: "无规范 · 重跑对照",
+    toolDetail: "与 v1 相同 prompt，不提取、不写规范，仅把参考页链接和一句话交给 Cursor",
+    referencePage: { ...IBM_DOCS_REFERENCE },
+    summary:
+      "IBM Docs 节奏：深色 masthead、搜索 Hero、统计行、分类 Tab、1px 卡片网格、灰底能力区、横向精选、资源列表、双层 footer。",
+    description:
+      "与 v1 同一工作流（零规范 + URL 参考）。深色 leadspace、方角卡片、IBM Blue CTA、375×812 固定画布，纯英文。",
+    prompt:
+      "https://www.ibm.com/docs/en 参考IBM风格设计一个设计师作品集移动端app主页（宽高写死，宽375高812），输出为html",
+    tools: ["Cursor", "HTML / CSS"],
+    references: [
+      { label: "IBM Documentation", url: "https://www.ibm.com/docs/en" },
+      { label: "Carbon Design System", url: "https://carbondesignsystem.com/" },
+    ],
+    preview: "versions/v7/index.html",
   },
 ];

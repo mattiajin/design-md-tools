@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=375, initial-scale=1.0" />
+    <title>Maya Ortiz — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #0f62fe;
+        --on-primary: #ffffff;
+        --ink: #161616;
+        --ink-muted: #525252;
+        --ink-helper: #6f6f6f;
+        --canvas: #ffffff;
+        --surface-1: #f4f4f4;
+        --surface-2: #e0e0e0;
+        --inverse-canvas: #161616;
+        --inverse-surface-1: #262626;
+        --inverse-surface: #393939;
+        --inverse-ink: #ffffff;
+        --inverse-ink-muted: #c6c6c6;
+        --inverse-link: #78a9ff;
+        --hairline: #e0e0e0;
+        --hairline-strong: #a8a8a8;
+        --blue-60: #0043ce;
+        --blue-80: #002d9c;
+        --search-bg: #262626;
+        --search-border: #525252;
+        --search-text: #f4f4f4;
+        --focus: #0f62fe;
+        --motion-fast: 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        --motion-normal: 150ms cubic-bezier(0.2, 0, 0.38, 0.9);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        width: 375px;
+        height: 812px;
+        overflow: hidden;
+      }
+
+      body {
+        width: 375px;
+        height: 812px;
+        overflow: hidden;
+        font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.43;
+        letter-spacing: 0.16px;
+        color: var(--ink);
+        background: var(--surface-1);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      :focus {
+        outline: none;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition: none !important;
+        }
+      }
+
+      .app {
+        display: flex;
+        flex-direction: column;
+        width: 375px;
+        height: 812px;
+        overflow: hidden;
+      }
+
+      /* masthead */
+      .masthead {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 48px;
+        padding: 0 16px;
+        background: var(--inverse-canvas);
+        color: var(--inverse-ink);
+        border-bottom: 1px solid var(--inverse-surface);
+      }
+
+      .masthead__brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.29;
+        letter-spacing: 0.16px;
+      }
+
+      .masthead__logo {
+        width: 32px;
+        height: 16px;
+        fill: var(--inverse-ink);
+      }
+
+      .masthead__menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        margin-right: -12px;
+        border: 0;
+        background: transparent;
+        color: var(--inverse-ink);
+        cursor: pointer;
+        transition: background var(--motion-fast);
+      }
+
+      .masthead__menu:hover {
+        background: var(--inverse-surface);
+      }
+
+      .masthead__menu:active {
+        background: #474747;
+      }
+
+      /* scrollable main */
+      .main {
+        flex: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+
+      .main::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* leadspace-hero */
+      .hero {
+        background: var(--inverse-canvas);
+        color: var(--search-text);
+        padding: 32px 16px 48px;
+      }
+
+      .hero__title {
+        font-size: 32px;
+        font-weight: 300;
+        line-height: 1.199;
+        letter-spacing: 0;
+        margin-bottom: 8px;
+      }
+
+      .hero__subtitle {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.43;
+        letter-spacing: 0.16px;
+        color: var(--inverse-ink-muted);
+        margin-bottom: 32px;
+      }
+
+      /* search-bar */
+      .search {
+        position: relative;
+      }
+
+      .search__icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        fill: var(--search-text);
+        pointer-events: none;
+      }
+
+      .search__input {
+        width: 100%;
+        height: 64px;
+        padding: 0 48px 0 44px;
+        border: 0;
+        border-bottom: 1px solid var(--search-border);
+        background: var(--search-bg);
+        color: var(--search-text);
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.4;
+        letter-spacing: 0;
+        transition: border-color var(--motion-fast);
+      }
+
+      .search__input::placeholder {
+        color: var(--search-text);
+        opacity: 0.85;
+      }
+
+      .search__input:hover {
+        border-bottom-color: var(--ink-helper);
+      }
+
+      .search__input:focus {
+        border-bottom: 2px solid var(--primary);
+      }
+
+      /* sections */
+      .section {
+        padding: 32px 0;
+      }
+
+      .section--canvas {
+        background: var(--canvas);
+      }
+
+      .section--band {
+        background: var(--surface-1);
+        padding: 48px 16px;
+      }
+
+      .section__heading {
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 1.286;
+        letter-spacing: 0;
+        color: var(--ink);
+        padding: 0 16px;
+        margin-bottom: 32px;
+      }
+
+      .section__heading--inset {
+        padding: 0;
+        margin-bottom: 24px;
+      }
+
+      /* docs-card grid */
+      .card-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1px;
+        background: var(--surface-1);
+      }
+
+      .card {
+        display: flex;
+        flex-direction: column;
+        min-height: 200px;
+        padding: 16px;
+        background: var(--canvas);
+        text-decoration: none;
+        color: inherit;
+        transition: background var(--motion-fast);
+      }
+
+      .card:hover .card__cta {
+        color: var(--blue-60);
+      }
+
+      .card:hover .card__cta svg {
+        fill: var(--blue-60);
+      }
+
+      .card:active {
+        background: var(--surface-1);
+      }
+
+      .card__eyebrow {
+        font-size: 14px;
+        line-height: 1.29;
+        color: var(--ink-muted);
+        margin-bottom: 8px;
+      }
+
+      .card__title {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1.4;
+        color: var(--ink);
+        margin-bottom: 12px;
+      }
+
+      .card__copy {
+        font-size: 14px;
+        line-height: 1.43;
+        letter-spacing: 0.16px;
+        color: var(--ink-muted);
+        margin-bottom: 24px;
+        flex: 1;
+      }
+
+      .card__footer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: auto;
+      }
+
+      .card__cta {
+        font-size: 16px;
+        line-height: 1.29;
+        color: var(--primary);
+        transition: color var(--motion-fast);
+      }
+
+      .card__cta svg {
+        width: 20px;
+        height: 20px;
+        fill: var(--primary);
+        vertical-align: middle;
+        transition: fill var(--motion-fast);
+      }
+
+      .card--blue {
+        background: var(--primary);
+        color: var(--on-primary);
+        min-height: 200px;
+      }
+
+      .card--blue:hover {
+        background: var(--blue-60);
+      }
+
+      .card--blue:active {
+        background: var(--blue-80);
+      }
+
+      .card--blue:focus-within {
+        box-shadow:
+          inset 0 0 0 1px var(--primary),
+          inset 0 -1px 0 1px var(--primary),
+          inset 0 0 0 3px var(--canvas);
+      }
+
+      .card--blue .card__eyebrow,
+      .card--blue .card__title,
+      .card--blue .card__copy {
+        color: var(--on-primary);
+      }
+
+      .card--blue .card__cta {
+        color: var(--on-primary);
+      }
+
+      .card--blue .card__cta svg {
+        fill: var(--on-primary);
+      }
+
+      .card--blue:hover .card__cta,
+      .card--blue:hover .card__cta svg {
+        color: var(--on-primary);
+        fill: var(--on-primary);
+      }
+
+      .card--inverse {
+        background: var(--inverse-surface);
+        color: var(--inverse-ink);
+      }
+
+      .card--inverse:hover {
+        background: #474747;
+      }
+
+      .card--inverse .card__eyebrow,
+      .card--inverse .card__title,
+      .card--inverse .card__copy {
+        color: var(--inverse-ink);
+      }
+
+      .card--inverse .card__cta {
+        color: var(--inverse-link);
+      }
+
+      .card--inverse .card__cta svg {
+        fill: var(--inverse-link);
+      }
+
+      /* section-band copy */
+      .band__body {
+        font-size: 16px;
+        line-height: 1.65;
+        color: var(--ink-muted);
+        margin-bottom: 24px;
+      }
+
+      .band__list {
+        list-style: none;
+        font-size: 16px;
+        line-height: 1.65;
+        color: var(--ink-muted);
+      }
+
+      .band__list li {
+        padding-left: 16px;
+        position: relative;
+        margin-bottom: 8px;
+      }
+
+      .band__list li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: var(--ink-helper);
+      }
+
+      /* featured carousel */
+      .featured-scroll {
+        display: flex;
+        gap: 1px;
+        overflow-x: auto;
+        padding: 0 16px 4px;
+        scrollbar-width: none;
+        background: transparent;
+      }
+
+      .featured-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .featured-tile {
+        flex: 0 0 148px;
+        height: 160px;
+        padding: 16px;
+        background: var(--canvas);
+        border: 1px solid var(--hairline);
+        text-decoration: none;
+        color: var(--ink);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        transition: background var(--motion-fast);
+      }
+
+      .featured-tile:hover {
+        background: var(--surface-1);
+      }
+
+      .featured-tile:active {
+        background: var(--surface-2);
+      }
+
+      .featured-tile__label {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.29;
+        letter-spacing: 0.16px;
+      }
+
+      .featured-tile__meta {
+        font-size: 12px;
+        line-height: 1.33;
+        letter-spacing: 0.32px;
+        color: var(--ink-muted);
+        margin-top: 4px;
+      }
+
+      /* button-primary */
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 12px 16px;
+        border: 0;
+        background: var(--primary);
+        color: var(--on-primary);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.29;
+        letter-spacing: 0.16px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background var(--motion-fast);
+      }
+
+      .btn-primary:hover {
+        background: var(--blue-60);
+      }
+
+      .btn-primary:active {
+        background: var(--blue-80);
+      }
+
+      .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        min-height: 48px;
+        padding: 12px 0;
+        border: 0;
+        background: transparent;
+        color: var(--primary);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.29;
+        letter-spacing: 0.16px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: color var(--motion-fast);
+      }
+
+      .btn-ghost:hover {
+        color: var(--blue-60);
+      }
+
+      .btn-ghost svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+
+      /* resource cards */
+      .resource-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1px;
+        background: var(--surface-1);
+        margin: 0 16px;
+      }
+
+      .resource-card {
+        display: flex;
+        flex-direction: column;
+        min-height: 120px;
+        padding: 16px;
+        background: var(--canvas);
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        transition: background var(--motion-fast);
+      }
+
+      .resource-card:hover {
+        background: var(--surface-1);
+      }
+
+      .resource-card:active {
+        background: var(--surface-2);
+      }
+
+      .resource-card__title {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.29;
+        letter-spacing: 0.16px;
+        color: var(--ink);
+        margin-bottom: 8px;
+      }
+
+      .resource-card__copy {
+        font-size: 16px;
+        line-height: 1.375;
+        color: var(--ink-muted);
+        flex: 1;
+        padding-bottom: 32px;
+      }
+
+      .resource-card__arrow {
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        width: 20px;
+        height: 20px;
+        fill: var(--primary);
+      }
+
+      /* footers */
+      .docs-footer {
+        padding: 16px;
+        background: var(--surface-1);
+        border-top: 1px solid var(--hairline-strong);
+        font-size: 12px;
+        line-height: 1.33;
+        letter-spacing: 0.32px;
+        color: var(--ink-muted);
+      }
+
+      .docs-footer__feedback {
+        display: block;
+        margin-top: 12px;
+        padding: 16px;
+        background: var(--canvas);
+        border: 1px solid var(--hairline);
+        color: var(--ink);
+        text-decoration: none;
+        transition: background var(--motion-fast);
+      }
+
+      .docs-footer__feedback:hover {
+        background: var(--surface-1);
+      }
+
+      .docs-footer__feedback strong {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .docs-footer__feedback span {
+        color: var(--primary);
+      }
+
+      .dotcom-footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 24px;
+        min-height: 48px;
+        padding: 12px 16px;
+        background: var(--inverse-canvas);
+        border-top: 1px solid var(--inverse-surface);
+      }
+
+      .dotcom-footer a {
+        font-size: 14px;
+        line-height: 1.29;
+        letter-spacing: 0.16px;
+        color: var(--inverse-ink-muted);
+        text-decoration: none;
+        transition: color var(--motion-fast);
+      }
+
+      .dotcom-footer a:hover {
+        color: var(--search-text);
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="masthead">
+        <div class="masthead__brand">
+          <svg class="masthead__logo" viewBox="0 0 58 23" aria-hidden="true">
+            <path
+              d="M10.5 0h4.2v23h-4.2V0zm13.1 0h4.2v23h-4.2V0zM0 0h4.2v23H0V0zm21 0h4.2v23H21V0zm10.5 0H35v23h-3.5V0z"
+            />
+          </svg>
+          <span>Portfolio</span>
+        </div>
+        <button class="masthead__menu" type="button" aria-label="Open menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill="currentColor" d="M2 4h16v2H2V4zm0 5h16v2H2V9zm0 5h16v2H2v-2z" />
+          </svg>
+        </button>
+      </header>
+
+      <main class="main" id="main">
+        <section class="hero" aria-labelledby="hero-title">
+          <h1 class="hero__title" id="hero-title">Maya Ortiz</h1>
+          <p class="hero__subtitle">Product designer · systems &amp; interfaces</p>
+          <div class="search">
+            <svg class="search__icon" viewBox="0 0 32 32" aria-hidden="true">
+              <path
+                d="M29 27.6l-7.5-7.5c1.4-1.7 2.2-3.9 2.2-6.2 0-5.5-4.5-10-10-10S4 8.4 4 13.9s4.5 10 10 10c2.3 0 4.5-.8 6.2-2.2l7.5 7.5 1.3-1.6zM14 21.9c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"
+              />
+            </svg>
+            <input
+              class="search__input"
+              type="search"
+              placeholder="Search projects and case studies"
+              aria-label="Search projects and case studies"
+            />
+          </div>
+        </section>
+
+        <section class="section section--canvas" aria-labelledby="selected-heading">
+          <h2 class="section__heading" id="selected-heading">Selected work</h2>
+          <div class="card-grid">
+            <a class="card" href="#">
+              <span class="card__eyebrow">Fintech · 2025</span>
+              <span class="card__title">Nova Pay mobile banking</span>
+              <p class="card__copy">
+                End-to-end redesign of onboarding, transfers, and spending insights for a
+                digital bank serving 2M customers.
+              </p>
+              <span class="card__footer">
+                <span class="card__cta">
+                  Open case study
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M11.8 2.8L10.8 3.8 16 9H2v2h14l-5.2 5.2 1 1 7.2-7.2-7.2-7.2z" />
+                  </svg>
+                </span>
+              </span>
+            </a>
+
+            <a class="card" href="#">
+              <span class="card__eyebrow">Enterprise · 2024</span>
+              <span class="card__title">Atlas design system</span>
+              <p class="card__copy">
+                Component library, token architecture, and documentation patterns adopted
+                across twelve product teams.
+              </p>
+              <span class="card__footer">
+                <span class="card__cta">
+                  Open case study
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M11.8 2.8L10.8 3.8 16 9H2v2h14l-5.2 5.2 1 1 7.2-7.2-7.2-7.2z" />
+                  </svg>
+                </span>
+              </span>
+            </a>
+
+            <a class="card card--inverse" href="#">
+              <span class="card__eyebrow">Healthcare · NDA</span>
+              <span class="card__title">Harbor clinical workspace</span>
+              <p class="card__copy">
+                Clinician dashboard for triage workflows. Full case study available on
+                request.
+              </p>
+              <span class="card__footer">
+                <span class="card__cta">
+                  Request access
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M11.8 2.8L10.8 3.8 16 9H2v2h14l-5.2 5.2 1 1 7.2-7.2-7.2-7.2z" />
+                  </svg>
+                </span>
+              </span>
+            </a>
+
+            <a class="card card--blue" href="#">
+              <span class="card__eyebrow">Archive</span>
+              <span class="card__title">View all projects</span>
+              <p class="card__copy">
+                Twelve shipped products across finance, health, and developer tools.
+              </p>
+              <span class="card__footer">
+                <span class="card__cta">
+                  Browse full portfolio
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M11.8 2.8L10.8 3.8 16 9H2v2h14l-5.2 5.2 1 1 7.2-7.2-7.2-7.2z" />
+                  </svg>
+                </span>
+              </span>
+            </a>
+          </div>
+        </section>
+
+        <section class="section--band" aria-labelledby="practice-heading">
+          <h2 class="section__heading section__heading--inset" id="practice-heading">
+            Design practice
+          </h2>
+          <p class="band__body">
+            I design documentation-grade interfaces: dense information hierarchies, square
+            geometry, and a single confident accent. My work sits at the intersection of
+            product UX and design systems.
+          </p>
+          <ul class="band__list">
+            <li>Design systems &amp; component specs</li>
+            <li>Complex dashboards &amp; data products</li>
+            <li>Mobile-first product flows</li>
+          </ul>
+        </section>
+
+        <section class="section section--canvas" aria-labelledby="featured-heading">
+          <h2 class="section__heading" id="featured-heading">More projects</h2>
+          <div class="featured-scroll" role="list">
+            <a class="featured-tile" href="#" role="listitem">
+              <span class="featured-tile__label">Lumina AI</span>
+              <span class="featured-tile__meta">SaaS · 2024</span>
+            </a>
+            <a class="featured-tile" href="#" role="listitem">
+              <span class="featured-tile__label">Relay Docs</span>
+              <span class="featured-tile__meta">DevTools · 2023</span>
+            </a>
+            <a class="featured-tile" href="#" role="listitem">
+              <span class="featured-tile__label">Northwind</span>
+              <span class="featured-tile__meta">Retail · 2023</span>
+            </a>
+            <a class="featured-tile" href="#" role="listitem">
+              <span class="featured-tile__label">Pulse HR</span>
+              <span class="featured-tile__meta">Workplace · 2022</span>
+            </a>
+            <a class="featured-tile" href="#" role="listitem">
+              <span class="featured-tile__label">Orbit Maps</span>
+              <span class="featured-tile__meta">Geo · 2022</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="section--band" aria-labelledby="collab-heading">
+          <h2 class="section__heading section__heading--inset" id="collab-heading">
+            Let&rsquo;s collaborate
+          </h2>
+          <p class="band__body">
+            Open to product design roles, design-system consulting, and selective freelance
+            engagements starting Q3 2026.
+          </p>
+          <a class="btn-primary" href="mailto:hello@mayaortiz.design">Get in touch</a>
+          <a class="btn-ghost" href="#">
+            Download r&eacute;sum&eacute;
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M11.8 2.8L10.8 3.8 16 9H2v2h14l-5.2 5.2 1 1 7.2-7.2-7.2-7.2z" />
+            </svg>
+          </a>
+        </section>
+
+        <section class="section section--canvas" aria-labelledby="resources-heading">
+          <h2 class="section__heading" id="resources-heading">Resources</h2>
+          <div class="resource-grid">
+            <a class="resource-card" href="mailto:hello@mayaortiz.design">
+              <span class="resource-card__title">Email</span>
+              <span class="resource-card__copy">hello@mayaortiz.design</span>
+              <svg class="resource-card__arrow" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M11.8 2.8L10.8 3.8 16 9H2v2h14l-5.2 5.2 1 1 7.2-7.2-7.2-7.2z" />
+              </svg>
+            </a>
+            <a class="resource-card" href="#">
+              <span class="resource-card__title">LinkedIn</span>
+              <span class="resource-card__copy">Connect for speaking and collaboration inquiries.</span>
+              <svg class="resource-card__arrow" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M11.8 2.8L10.8 3.8 16 9H2v2h14l-5.2 5.2 1 1 7.2-7.2-7.2-7.2z" />
+              </svg>
+            </a>
+            <a class="resource-card" href="#">
+              <span class="resource-card__title">Dribbble</span>
+              <span class="resource-card__copy">Visual explorations and interface snapshots.</span>
+              <svg class="resource-card__arrow" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M11.8 2.8L10.8 3.8 16 9H2v2h14l-5.2 5.2 1 1 7.2-7.2-7.2-7.2z" />
+              </svg>
+            </a>
+            <a class="resource-card" href="#">
+              <span class="resource-card__title">Read.cv</span>
+              <span class="resource-card__copy">Timeline, roles, and selected press features.</span>
+              <svg class="resource-card__arrow" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M11.8 2.8L10.8 3.8 16 9H2v2h14l-5.2 5.2 1 1 7.2-7.2-7.2-7.2z" />
+              </svg>
+            </a>
+          </div>
+        </section>
+
+        <footer class="docs-footer">
+          <p>&copy; Copyright Maya Ortiz 2026</p>
+          <a class="docs-footer__feedback" href="#">
+            <strong>Feedback</strong>
+            <span>Suggest an improvement to this portfolio</span>
+          </a>
+        </footer>
+
+        <nav class="dotcom-footer" aria-label="Legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms of use</a>
+          <a href="#">Accessibility</a>
+        </nav>
+      </main>
+    </div>
+  </body>
+</html>

@@ -22,12 +22,18 @@
 
   const PREVIEW_MODE_KEY = "design-md-preview-mode";
   const TOOL_COLOR_MAP = {
+    "裸 prompt": "#bf4800",
     "design-md-chrome": "#0071e3",
-    Cursor: "#bf4800",
     designmaxxing: "#248a3d",
     "awesome-design-md": "#8944ab",
     skillui: "#d70015",
+    "手写 DESIGN.md": "#1d7a5c",
   };
+
+  const VERSION_SECTIONS = [
+    { axis: "none", label: "无规范" },
+    { axis: "spec", label: "规范来源" },
+  ];
 
   let currentId = null;
   let allSameRef = false;
@@ -165,6 +171,38 @@
 
   function getToolColor(toolName) {
     return TOOL_COLOR_MAP[toolName] || "#0071e3";
+  }
+
+  function groupVersionsByAxis(versions) {
+    return VERSION_SECTIONS.map((section) => ({
+      label: section.label,
+      versions: versions.filter((v) => v.axis === section.axis),
+    })).filter((section) => section.versions.length > 0);
+  }
+
+  function renderVersionButton(v) {
+    const toolName = getToolName(v);
+    const color = getToolColor(toolName);
+
+    return (
+      '<button type="button" class="version-btn" data-id="' +
+      escapeAttr(v.id) +
+      '" aria-current="false">' +
+      '<span class="version-btn__head">' +
+      '<span class="version-btn__tool" style="color:' +
+      escapeAttr(color) +
+      '">' +
+      escapeHtml(toolName) +
+      "</span>" +
+      '<span class="version-btn__id">' +
+      escapeHtml(v.id) +
+      "</span>" +
+      "</span>" +
+      (v.note
+        ? '<span class="version-btn__note">' + escapeHtml(v.note) + "</span>"
+        : "") +
+      "</button>"
+    );
   }
 
   function isRuntimeTool(toolItem, primaryTool) {
@@ -327,7 +365,7 @@
   allSameRef = VERSIONS.every((v) => getReferencePage(v).url === firstRef.url);
 
   if (countEl) {
-    countEl.textContent = "对比变量：设计规范来源";
+    countEl.textContent = "无规范对照 + 规范来源";
   }
 
   if (allSameRef && sharedRefEl && sharedRefLink) {
@@ -339,38 +377,22 @@
   function getInitialId() {
     const hash = location.hash.replace("#", "");
     if (hash && VERSIONS.some((v) => v.id === hash)) return hash;
-    return VERSIONS[VERSIONS.length - 1].id;
+    return VERSIONS[0].id;
   }
 
-  VERSIONS.forEach((v) => {
-    const toolName = getToolName(v);
-    const ref = getReferencePage(v);
-    const color = getToolColor(toolName);
+  groupVersionsByAxis(VERSIONS).forEach((section) => {
+    const heading = document.createElement("li");
+    heading.className = "version-section";
+    heading.innerHTML =
+      '<p class="version-section__label">' + escapeHtml(section.label) + "</p>";
+    listEl.appendChild(heading);
 
-    const li = document.createElement("li");
-    li.className = "version-list__item";
-    li.innerHTML =
-      '<button type="button" class="version-btn" data-id="' +
-      escapeAttr(v.id) +
-      '" aria-current="false">' +
-      '<span class="version-btn__head">' +
-      '<span class="version-btn__tool" style="color:' +
-      escapeAttr(color) +
-      '">' +
-      escapeHtml(toolName) +
-      "</span>" +
-      '<span class="version-btn__id">' +
-      escapeHtml(v.id) +
-      "</span>" +
-      "</span>" +
-      (v.note
-        ? '<span class="version-btn__note">' + escapeHtml(v.note) + "</span>"
-        : "") +
-      (allSameRef
-        ? ""
-        : '<span class="version-btn__ref">' + escapeHtml(ref.label) + "</span>") +
-      "</button>";
-    listEl.appendChild(li);
+    section.versions.forEach((v) => {
+      const li = document.createElement("li");
+      li.className = "version-list__item";
+      li.innerHTML = renderVersionButton(v);
+      listEl.appendChild(li);
+    });
   });
 
   listEl.addEventListener("click", (e) => {
