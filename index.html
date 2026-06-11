@@ -3,23 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>工具对比 — 作品集首页</title>
+    <title>Design.md 工作流对比</title>
     <link rel="stylesheet" href="css/overview.css" />
   </head>
   <body>
     <main class="archive">
       <nav class="version-nav" aria-label="对比版本">
         <div class="version-nav__brand">
-          <h1 class="version-nav__title">工具对比</h1>
-          <p class="version-nav__desc">作品集首页 · 375×812 · 同参考页对照</p>
+          <h1 class="version-nav__title">Design.md 工作流对比</h1>
+          <p class="version-nav__desc">同一参考页 · 同一尺寸，对比 5 种 AI 生成方式</p>
           <div class="version-nav__ref-row" id="shared-ref" hidden>
-            <span class="version-nav__ref-label">参考页</span>
+            <span class="version-nav__ref-label">参考风格</span>
             <a class="version-nav__ref-link" id="shared-ref-link" href="#" target="_blank" rel="noopener noreferrer"></a>
           </div>
+          <p class="version-nav__canvas">画布 375 × 812</p>
           <p class="version-nav__meta" id="version-count"></p>
         </div>
 
-        <h2 class="version-nav__heading">生成工具</h2>
+        <h2 class="version-nav__heading">5 种工作流</h2>
         <ul class="version-list" id="version-list"></ul>
       </nav>
 
@@ -38,7 +39,7 @@
               role="tab"
               id="preview-mode-compare"
               data-mode="compare"
-              aria-selected="true"
+              aria-selected="false"
             >
               对照
             </button>
@@ -48,7 +49,7 @@
               role="tab"
               id="preview-mode-solo"
               data-mode="solo"
-              aria-selected="false"
+              aria-selected="true"
             >
               单屏
             </button>
@@ -143,7 +144,7 @@
 
       <aside class="detail-panel" aria-label="对比详情">
         <section class="detail-section detail-section--hero">
-          <h3 class="detail-section__heading">对比工具</h3>
+          <h3 class="detail-section__heading">工作流</h3>
           <p class="detail-tool-name" id="detail-tool"></p>
           <p class="detail-section__body" id="detail-tool-detail"></p>
           <p class="detail-section__subheading" id="detail-tools-sub">运行环境</p>

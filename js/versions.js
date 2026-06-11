@@ -1,5 +1,5 @@
 /**
- * 工具对比档案
+ * Design.md 工作流对比档案
  *
  * 版本编号从 v1 起连续递增，与 versions/v1、v2… 文件夹一一对应。
  *
@@ -7,7 +7,7 @@
  * 1. 新建 versions/vN/index.html（375×812）
  * 2. 在 VERSIONS 末尾追加记录（id / preview 与文件夹名一致）
  *
- * 命名约定：tool = 对比变量，note = 本次尝试的差异说明（一句话）
+ * 命名约定：tool = 对比变量，note = 规范来源差异（一句话，统一句式）
  *
  * referencePage.mobilePreview = 本地 375×812 参考页快照（外链通常无法 iframe）
  */
@@ -22,8 +22,29 @@ const VERSIONS = [
     id: "v1",
     date: "2026-06-11",
     status: "exploration",
+    tool: "Cursor",
+    note: "无规范 · 只给链接",
+    toolDetail: "无粘贴设计规范，直接让 Agent 根据参考链接生成",
+    referencePage: { ...IBM_DOCS_REFERENCE },
+    summary:
+      "Carbon tokens + IBM Plex，文档式搜索与 topic tiles，深色顶栏 + 浅色内容区，英文界面。",
+    description:
+      "IBM Documentation 首页结构：logo、全局搜索、topic tiles、精选资源卡与文档索引列表。375×812 固定画布，含完整 hover / active / focus-visible 状态。",
+    prompt:
+      "https://www.ibm.com/docs/en 参考IBM风格设计一个设计师作品集移动端app主页（宽高写死，宽375高812），输出为html",
+    tools: ["Cursor", "HTML / CSS"],
+    references: [
+      { label: "IBM Documentation", url: "https://www.ibm.com/docs/en" },
+      { label: "Carbon Design System", url: "https://carbondesignsystem.com/" },
+    ],
+    preview: "versions/v1/index.html",
+  },
+  {
+    id: "v2",
+    date: "2026-06-11",
+    status: "exploration",
     tool: "design-md-chrome",
-    note: "设计规范全文贴入 prompt",
+    note: "规范全文 · 手动粘贴",
     toolDetail: "Chrome 扩展提取设计规范 → Cursor Skill 驱动生成",
     referencePage: { ...IBM_DOCS_REFERENCE },
     summary:
@@ -96,27 +117,6 @@ Concise, confident, implementation-focused.
     references: [
       { label: "IBM Documentation", url: "https://www.ibm.com/docs/en" },
     ],
-    preview: "versions/v1/index.html",
-  },
-  {
-    id: "v2",
-    date: "2026-06-11",
-    status: "exploration",
-    tool: "Cursor",
-    note: "仅 URL + 一句话 prompt",
-    toolDetail: "无粘贴设计规范，直接让 Agent 根据参考链接生成",
-    referencePage: { ...IBM_DOCS_REFERENCE },
-    summary:
-      "Carbon tokens + IBM Plex，文档式搜索与 topic tiles，深色顶栏 + 浅色内容区，英文界面。",
-    description:
-      "IBM Documentation 首页结构：logo、全局搜索、topic tiles、精选资源卡与文档索引列表。375×812 固定画布，含完整 hover / active / focus-visible 状态。",
-    prompt:
-      "https://www.ibm.com/docs/en 参考IBM风格设计一个设计师作品集移动端app主页（宽高写死，宽375高812），输出为html",
-    tools: ["Cursor", "HTML / CSS"],
-    references: [
-      { label: "IBM Documentation", url: "https://www.ibm.com/docs/en" },
-      { label: "Carbon Design System", url: "https://carbondesignsystem.com/" },
-    ],
     preview: "versions/v2/index.html",
   },
   {
@@ -124,7 +124,7 @@ Concise, confident, implementation-focused.
     date: "2026-06-11",
     status: "exploration",
     tool: "designmaxxing",
-    note: "先提取参考页风格再生成",
+    note: "现场提取 · 自动生成规范",
     toolDetail: "designmaxxing extract 后，用提取结果作为 prompt 上下文",
     referencePage: { ...IBM_DOCS_REFERENCE },
     summary:
@@ -145,7 +145,7 @@ Concise, confident, implementation-focused.
     date: "2026-06-11",
     status: "exploration",
     tool: "awesome-design-md",
-    note: "使用仓库预置 DESIGN.md，无现场提取",
+    note: "预置规范 · 无需现场提取",
     toolDetail:
       "从 awesome-design-md 复制 ibm/DESIGN.md → Cursor 读取文件后生成页面",
     referencePage: { ...IBM_DOCS_REFERENCE },
@@ -173,7 +173,7 @@ Concise, confident, implementation-focused.
     date: "2026-06-11",
     status: "exploration",
     tool: "skillui",
-    note: "skillui 提取后读 DESIGN.md 生成",
+    note: "现场提取 + 预置规范",
     toolDetail:
       "skillui --url 静态提取 IBM Docs → 读取 DESIGN.md + SKILL.md → Cursor 生成页面",
     referencePage: { ...IBM_DOCS_REFERENCE },

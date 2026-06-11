@@ -1,6 +1,6 @@
-# 工具对比 — 作品集首页
+# Design.md 工作流对比
 
-同一参考页（[IBM Documentation](https://www.ibm.com/docs/en)）下，对比不同 prompt / 工具策略生成的 **375×812** 移动端作品集主页。
+同一参考页（[IBM Documentation](https://www.ibm.com/docs/en)）、同一尺寸（**375×812**）下，对比 5 种 AI 工作流生成的移动端作品集主页。对比变量：**设计规范来源**。
 
 本地预览：
 

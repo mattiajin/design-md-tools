@@ -138,11 +138,17 @@ body {
   text-decoration: underline;
 }
 
+.version-nav__canvas {
+  margin: 4px 0 0;
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 .version-nav__meta {
   margin: 6px 0 0;
   font-size: 0.625rem;
   color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
 }
 
 .version-nav__heading {

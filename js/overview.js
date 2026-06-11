@@ -34,14 +34,14 @@
   let allSameRef = false;
   let hasRefPreview = false;
   let currentRefLabel = "";
-  let previewMode = "compare";
+  let previewMode = "solo";
 
   function loadPreviewMode() {
     try {
       const stored = localStorage.getItem(PREVIEW_MODE_KEY);
-      return stored === "solo" ? "solo" : "compare";
+      return stored === "compare" ? "compare" : "solo";
     } catch {
-      return "compare";
+      return "solo";
     }
   }
 
@@ -315,7 +315,7 @@
 
     iframe.src = v.preview;
     if (openLink) openLink.href = v.preview;
-    document.title = toolName + " — 工具对比";
+    document.title = toolName + " — Design.md 工作流对比";
     location.hash = id;
     renderDetail(v);
     updatePreviewLayout();
@@ -342,7 +342,7 @@
   allSameRef = VERSIONS.every((v) => getReferencePage(v).url === firstRef.url);
 
   if (countEl) {
-    countEl.textContent = VERSIONS.length + " 种 prompt 策略";
+    countEl.textContent = "对比变量：设计规范来源";
   }
 
   if (allSameRef && sharedRefEl && sharedRefLink) {
